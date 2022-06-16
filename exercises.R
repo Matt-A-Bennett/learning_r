@@ -49,18 +49,20 @@ print('Exercises 5.3.1')
 print('Exercises 5.4.1')
     # Brainstorm as many ways as possible to select dep_time, dep_delay,
     # arr_time, and arr_delay from flights.
-
+    select(flights, dep_time, dep_delay, arr_time, arr_delay)
+    select(flights, starts_with('dep'), starts_with('arr'))
+    select(flights, matches('^[a-z]{3}_[a-z]{3}[a-z]'))
     # What happens if you include the name of a variable multiple times in a
-    # select() call?
-
+    # select() call? ANS: it only appears once
+    select(flights, dep_time, dep_time, arr_time, dep_time)
     # What does the any_of() function do? Why might it be helpful in
-    # conjunction with this vector?
-
+    # conjunction with this vector? ANS: selects any vars in a character
+    # vector, (ignoring missing vars). Find seasonal variation in flight delays
+    vars <- c('dep_time', 'dep_delay', 'arr_time', 'arr_delay')
+    select(flights, any_of(vars))
     # vars <- c("year", "month", "day", "dep_delay", "arr_delay")
-
     # Does the result of running the following code surprise you? How do the
     # select helpers deal with case by default? How can you change that
-    # default?
-
-    # select(flights, contains("TIME"))
+    # default? ANS: I am, they ignore case by default.
+    select(flights, contains("TIME", ignore.case=FALSE))
 
