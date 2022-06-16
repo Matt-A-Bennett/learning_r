@@ -9,7 +9,7 @@ source("../functions.R")
 # print the tibble
 nycflights13::flights
 
-print('Exercises 5.2.4')
+print('Exercises 5.2.4 (filter)')
     # Had an arrival delay of two or more hours
     filter(flights, dep_delay>120 & arr_delay>120)
     # Flew to Houston (IAH or HOU)
@@ -32,7 +32,7 @@ print('Exercises 5.2.4')
     # NA ^ 0 is 1, NA * 0 is NA
     # because any number ^ 0 is 1 (even Inf), but Inf * 0 is not 0, it's undefined
 
-print('Exercises 5.3.1')
+print('Exercises 5.3.1 (arrange)')
     # How could you use arrange() to sort all missing values to the start?
     # (Hint: use is.na()).
     df <- tibble(x=c(5,NA,2))
@@ -46,7 +46,7 @@ print('Exercises 5.3.1')
     # Which flights travelled the farthest? Which travelled the shortest?
      arrange(flights, distance)
 
-print('Exercises 5.4.1')
+print('Exercises 5.4.1 (select)')
     # Brainstorm as many ways as possible to select dep_time, dep_delay,
     # arr_time, and arr_delay from flights.
     select(flights, dep_time, dep_delay, arr_time, arr_delay)
@@ -65,4 +65,8 @@ print('Exercises 5.4.1')
     # select helpers deal with case by default? How can you change that
     # default? ANS: I am, they ignore case by default.
     select(flights, contains("TIME", ignore.case=FALSE))
+
+print('Exercises 5.6.7 (grouped summaries)')
+
+print('Exercises 5.7.1 (grouped mutates and filters)')
 
