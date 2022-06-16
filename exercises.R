@@ -71,20 +71,29 @@ print('Exercises 5.5.2 (mutate)')
     # to compute with because they’re not really continuous numbers. Convert
     # them to a more convenient representation of number of minutes since
     # midnight.
-
+    mutate(flights,
+           dep_time = dep_time / 100 * 60,
+           sched_dep_time = sched_dep_time / 100 * 60)
     # Compare air_time with arr_time - dep_time. What do you expect to see?
     # What do you see? What do you need to do to fix it?
-
+    mutate(flights,
+           air_time = arr_time - dep_time)
     # Compare dep_time, sched_dep_time, and dep_delay. How would you expect
-    # those three numbers to be related?
-
+    # those three numbers to be related? ANS: They're very wrong but I can't
+    # tell how the were generated...
+    mutate(flights,
+           dep_time = dep_time / 100 * 60,
+           sched_dep_time = sched_dep_time / 100 * 60) %>%
+    select(flights, contains('dep')) %>%
+    arrange(desc(dep_delay))
     # Find the 10 most delayed flights using a ranking function. How do you
     # want to handle ties? Carefully read the documentation for min_rank().
-
-    # What does 1:3 + 1:10 return? Why?
-
-    # What trigonometric functions does R provide?
-
+    arrange(flights, desc(min_rank(arr_delay)), desc(min_rank(dep_delay)))
+    # What does 1:3 + 1:10 return? Why? ANS: shorter vector is repeated such
+    # that it matches in length
+    # What trigonometric functions does R provide? ANS: defaults to degrees,
+    # rather that radians... gives the sin, cos, tan + their inverses, atan2,
+    # and versions for taking some proportion of pi (i.e. do things in radians)
 print('Exercises 5.6.7 (grouped summaries)')
 
 print('Exercises 5.7.1 (grouped mutates and filters)')
