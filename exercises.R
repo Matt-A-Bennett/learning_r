@@ -4,7 +4,6 @@
 
 library(nycflights13)
 library(tidyverse)
-
 source("../functions.R")
 
 # print the tibble
