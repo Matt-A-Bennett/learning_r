@@ -202,3 +202,27 @@ print('Exercises 5.6.7 (grouped summaries)')
     # ANS: If ‘TRUE’, will show the largest groups at the top.
 
 print('Exercises 5.7.1 (grouped mutate and filters)')
+    # 1. Refer back to the table of useful mutate and filtering functions.
+    # Describe how each operation changes when you combine it with grouping.
+
+    # 2. Which plane ( tailnum ) has the worst on-time record?
+
+    # 3. What time of day should you fly if you want to avoid delays as much as
+    # possible?
+
+    # 4. For each destination, compute the total minutes of delay. For each
+    # flight, compute the proportion of the total delay for its destination.
+
+    # 5. Delays are typically temporally correlated: even once the prob‐ lem
+    # that caused the initial delay has been resolved, later flights are
+    # delayed to allow earlier flights to leave. Using lag() explores how the
+    # delay of a flight is related to the delay of the immedi‐ ately preceding
+    # flight.
+
+    # 6. Look at each destination. Can you find flights that are suspi‐ ciously
+    # fast? (That is, flights that represent a potential data entry error.)
+    # Compute the air time of a flight relative to the shortest flight to that
+    # destination. Which flights were most delayed in the air?
+
+    # 7. Find all destinations that are flown by at least two carriers. Use
+    # that information to rank the carriers.
