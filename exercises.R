@@ -204,25 +204,89 @@ print('Exercises 5.6.7 (grouped summaries)')
 print('Exercises 5.7.1 (grouped mutate and filters)')
     # 1. Refer back to the table of useful mutate and filtering functions.
     # Describe how each operation changes when you combine it with grouping.
+    # ANS: Only functions which do a collective operation over the vector will
+    # respect grouping and the result is different that without grouping.
+    flights %>%
+        group_by(dest) %>%
+        mutate(dep_time_more = log(dep_time), .after = dep_delay) %>%
+        relocate(dest)
+
+    flights %>%
+        group_by(dest) %>%
+        mutate(dep_time_more = dep_time + 1, .after = dep_delay) %>%
+        relocate(dest)
 
     # 2. Which plane ( tailnum ) has the worst on-time record?
+    flights %>%
+        group_by(tailnum) %>%
+        summarize(mean_delay = mean(arr_delay, na.rm = T), n = n()) %>%
+        filter(n > 20) %>%
+        filter(min_rank(desc(mean_delay)) == 1)
 
     # 3. What time of day should you fly if you want to avoid delays as much as
     # possible?
+    flights %>%
+        group_by(hour, minute) %>%
+        mutate(new = hour + minute/60, del = mean(arr_delay, na.rm = T), n = n()) %>% 
+        filter(n > 30) %>% 
+        ggplot(mapping = aes(x=new, y=del, size = n)) + 
+               geom_point(alpha = 1/10)
 
     # 4. For each destination, compute the total minutes of delay. For each
     # flight, compute the proportion of the total delay for its destination.
+    flights %>%
+        group_by(dest) %>%
+        summarize(tot_del = sum(arr_delay, na.rm = T)) %>%
+        arrange(desc(tot_del))
 
-    # 5. Delays are typically temporally correlated: even once the prob‐ lem
-    # that caused the initial delay has been resolved, later flights are
-    # delayed to allow earlier flights to leave. Using lag() explores how the
-    # delay of a flight is related to the delay of the immedi‐ ately preceding
-    # flight.
+    # 5. Delays are typically temporally correlated: even once the problem that
+    # caused the initial delay has been resolved, later flights are delayed to
+    # allow earlier flights to leave. Using lag() explores how the delay of a
+    # flight is related to the delay of the immediately preceding flight.
+    flights %>%
+        arrange(origin, year, month, day, dep_time) %>%
+        group_by(origin) %>%
+        mutate(prev = lag(dep_delay)) %>%
+        filter(!is.na(dep_delay) & !is.na(prev)) -> lagged_flights
 
-    # 6. Look at each destination. Can you find flights that are suspi‐ ciously
+    lagged_flights %>%
+        group_by(prev) %>%
+        summarize(dep_delay_mean = mean(dep_delay)) %>%
+        ggplot(mapping = aes(x = prev, y = dep_delay_mean)) +
+            geom_point(alpha=1/2)
+
+    # 6. Look at each destination. Can you find flights that are suspiciously
     # fast? (That is, flights that represent a potential data entry error.)
     # Compute the air time of a flight relative to the shortest flight to that
     # destination. Which flights were most delayed in the air?
+    flights %>%
+        group_by(dest, origin) %>%
+        filter(!is.na(air_time)) %>%
+        mutate(shortest = air_time[min(distance)],
+               relative = air_time/shortest,
+               speed = distance/air_time * 60) %>%
+        relocate(dest, carrier, flight, shortest, distance, air_time, relative,
+                 speed) %>%
+        arrange(relative) -> air_time 
+        
+    air_time %>%
+        ggplot(mapping = aes(x = relative)) +
+        geom_histogram(binwidth = 0.02)
+
+    air_time %>%
+        ggplot(mapping = aes(x = speed)) +
+        geom_histogram(binwidth = 10)
 
     # 7. Find all destinations that are flown by at least two carriers. Use
     # that information to rank the carriers.
+    flights %>%
+        group_by(dest) %>%
+        mutate(n_carrier = n_distinct(carrier)) %>% 
+        filter(n_carrier > 1) %>%
+        select(dest, carrier, n_carrier) %>%
+        arrange(desc(n_carrier), dest, carrier) %>%
+        group_by(carrier) %>%
+        summarize(n_dest = n_distinct(dest)) %>%
+        arrange(desc(n_dest))
+
+
