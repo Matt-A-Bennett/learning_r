@@ -5,19 +5,44 @@
 # while z is different. Thus, z is probably the height of the diamond and x and
 # y are the width and depth.
 diamonds %>%
-    filter(x<10 & y<10 & z<10) %>%
     pivot_longer(c(x,y,z), names_to='dimension', values_to='length') %>%
+    filter(length > 2 & length < 10) %>%
     ggplot() +
     geom_histogram(aes(x=length), binwidth=0.05) +
     facet_wrap(~dimension, nrow=3)
 
 # 2. Explore the distribution of price. Do you discover anything unusual or
 # surprising? (Hint: carefully think about the bin width and make sure you try
-# a wide range of values.)
+# a wide range of values.) ANS: no diamonds priced between 1459 and 1541
+diamonds %>%
+    ggplot() +
+    geom_histogram(aes(x=price), binwidth=10) +
+    coord_cartesian(xlim=c(1000, 2000))
 
 # 3. How many diamonds are 0.99 carat? How many are 1 carat? What do you think
-# is the cause of the difference?
+# is the cause of the difference? ANS: not sure why - maybe rounding up to sell
+# for more money?
+diamonds %>%
+    summarize(`0.99` = sum(carat==0.99),
+              `1`    = sum(carat==1))
+
+diamonds %>%
+    ggplot() +
+    geom_histogram(aes(x=carat), binwidth=0.01) +
+    coord_cartesian(xlim=c(0.99, 1))
+
 
 # 4. Compare and contrast coord_cartesian() versus xlim() or ylim() when
 # zooming in on a histogram. What happens if you leave binwidth unset? What
-# happens if you try and zoom so only half a bar shows?
+# happens if you try and zoom so only half a bar shows? ANS: xlim() affects the
+# bins - they filter the data outside of the lims before making the histogram,
+# coord_cartesian() simply keeps zooming in.
+diamonds %>%
+    ggplot() +
+    geom_histogram(aes(x=price)) +
+    coord_cartesian(xlim=c(1400, 1600))
+
+diamonds %>%
+    ggplot() +
+    geom_histogram(aes(x=price)) +
+    xlim(1453, 1455)

@@ -12,6 +12,6 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] grouped mutates and filters
 
 #### Chapter 5 
-- [ ] distributions
+- [x] distributions
 
 
