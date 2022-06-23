@@ -4,7 +4,7 @@ Science](https://r4ds.had.co.nz/index.html)
 
 ### Exercises Done so far:
 #### Chapter 3 
-- [x] (filter
+- [x] filter
 - [x] arrange
 - [x] select
 - [x] mutate
