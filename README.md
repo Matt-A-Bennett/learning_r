@@ -2,12 +2,14 @@
 Going through the exercises in [R for Data
 Science](https://r4ds.had.co.nz/index.html)
 
-#### Done so far:
-- [x] Exercises 5.2.4 (filter)
-- [x] Exercises 5.3.1 (arrange)
-- [x] Exercises 5.4.1 (select)
-- [x] Exercises 5.5.2 (mutate)
-- [x] Exercises 5.6.7 (grouped summaries)
-- [x] Exercises 5.7.1 (grouped mutates and filters)
+#### Exercises Done so far:
+- [x] chapter 3 (filter)
+- [x] chapter 3 (arrange)
+- [x] chapter 3 (select)
+- [x] chapter 3 (mutate)
+- [x] chapter 3 (grouped summaries)
+- [x] chapter 3 (grouped mutates and filters)
+
+- [ ] chapter 5 (distributions)
 
 
