@@ -1,3 +1,4 @@
+### distributions #############################################################
 
 # 1. Explore the distribution of each of the x , y , and z variables in
 # diamonds . What do you learn? Think about a diamond and how you might decide
@@ -46,3 +47,11 @@ diamonds %>%
     ggplot() +
     geom_histogram(aes(x=price)) +
     xlim(1453, 1455)
+
+
+### missing values ############################################################
+
+# 1. What happens to missing values in a histogram? What happens to missing
+# values in a bar chart? Why is there a difference?
+
+# 2. What does na.rm = TRUE do in mean() and sum() ?
