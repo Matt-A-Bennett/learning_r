@@ -1,14 +1,5 @@
-# install.packages("gamair")
 
-library(nycflights13)
-library(tidyverse)
-library(Lahman)
-source("../functions.R")
 not_cancelled <- flights %>% filter(!is.na(dep_delay), !is.na(arr_delay))
-
-# print the tibble
-nycflights13::flights
-
 
 print('Exercises 5.2.4 (filter)')
     # Had an arrival delay of two or more hours
