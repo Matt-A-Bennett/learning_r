@@ -74,7 +74,7 @@ flights %>%
 flights %>%
     summarize(sum(dep_delay, na.rm = T))
 
-### covariation ###############################################################
+### a categorical and continuous variable #####################################
 # 1. Use what you’ve learned to improve the visualization of the departure
 # times of cancelled versus noncancelled flights.
 
