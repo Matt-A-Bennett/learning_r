@@ -73,3 +73,32 @@ flights %>%
 
 flights %>%
     summarize(sum(dep_delay, na.rm = T))
+
+### covariation ###############################################################
+# 1. Use what you’ve learned to improve the visualization of the departure
+# times of cancelled versus noncancelled flights.
+
+# 2. What variable in the diamonds dataset is most important for predicting the
+# price of a diamond? How is that variable correla‐ ted with cut? Why does the
+# combination of those two relation‐ ships lead to lower quality diamonds being
+# more expensive?
+
+# 3. Install the ggstance package, and create a horizontal boxplot. How does
+# this compare to using coord_flip() ?
+
+# 4. One problem with boxplots is that they were developed in an era of much
+# smaller datasets and tend to display a prohibitively large number of
+# “outlying values.” One approach to remedy this problem is the letter value
+# plot. Install the lvplot package, and try using geom_lv() to display the
+# distribution of price versus cut. What do you learn? How do you interpret the
+# plots?
+
+# 5. Compare and contrast geom_violin() with a faceted geom_his togram() , or a
+# colored geom_freqpoly() . What are the pros and cons of each method?
+
+# 6. If you have a small dataset, it’s sometimes useful to use geom_jitter() to
+# see the relationship between a continuous and categorical variable. The
+# ggbeeswarm package provides a number of methods similar to geom_jitter() .
+# List them and briefly describe what each one does.
+
+

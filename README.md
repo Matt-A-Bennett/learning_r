@@ -14,5 +14,6 @@ Science](https://r4ds.had.co.nz/index.html)
 #### Chapter 5 
 - [x] distributions
 - [x] missing values
+- [ ] covariation
 
 
