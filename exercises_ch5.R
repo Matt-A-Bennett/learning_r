@@ -52,6 +52,24 @@ diamonds %>%
 ### missing values ############################################################
 
 # 1. What happens to missing values in a histogram? What happens to missing
-# values in a bar chart? Why is there a difference?
+# values in a bar chart? Why is there a difference? ANS: histogram drops them,
+# bar treats them as a new category. Because histogram takes numerical data (so
+# NA doesn't count)
+diamonds %>%
+    filter(y > 3 & y < 20) %>%
+    mutate(y = ifelse(y>4, NA, y)) %>%
+    ggplot() +
+    geom_histogram(aes(x=y))
 
-# 2. What does na.rm = TRUE do in mean() and sum() ?
+diamonds %>%
+    mutate(cut = ifelse(cut=='Good', NA, 'Good')) %>%
+    ggplot() +
+    geom_bar(aes(x=cut))
+
+# 2. What does na.rm = TRUE do in mean() and sum() ? ANS: applies the function
+# just to the non NA values
+flights %>%
+    summarize(mean(dep_delay, na.rm = T))
+
+flights %>%
+    summarize(sum(dep_delay, na.rm = T))
