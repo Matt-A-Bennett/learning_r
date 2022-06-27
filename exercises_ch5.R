@@ -79,8 +79,8 @@ flights %>%
 # times of cancelled versus noncancelled flights.
 
 # 2. What variable in the diamonds dataset is most important for predicting the
-# price of a diamond? How is that variable correla‐ ted with cut? Why does the
-# combination of those two relation‐ ships lead to lower quality diamonds being
+# price of a diamond? How is that variable correlated with cut? Why does the
+# combination of those two relationships lead to lower quality diamonds being
 # more expensive?
 
 # 3. Install the ggstance package, and create a horizontal boxplot. How does
