@@ -77,28 +77,80 @@ flights %>%
 ### a categorical and continuous variable #####################################
 # 1. Use what you’ve learned to improve the visualization of the departure
 # times of cancelled versus noncancelled flights.
+flights %>%
+    mutate(cancelled =  is.na(dep_delay)) %>%
+    ggplot() +
+    geom_boxplot(aes(x = cancelled, y = sched_dep_time))
 
 # 2. What variable in the diamonds dataset is most important for predicting the
 # price of a diamond? How is that variable correlated with cut? Why does the
 # combination of those two relationships lead to lower quality diamonds being
-# more expensive?
+# more expensive? ANS: worse cut are bigger and so on balance more expensive
+diamonds %>%
+    filter(z > 2 & z < 7) %>%
+    ggplot(aes(x, price)) +
+    # geom_boxplot()
+    geom_point()
 
 # 3. Install the ggstance package, and create a horizontal boxplot. How does
-# this compare to using coord_flip() ?
+# this compare to using coord_flip() ? ANS: While coord_flip() can only flip a
+# plot as a whole, ggstance provides flipped versions of Geoms, Stats and
+# Positions. This makes it easier to build horizontal layer or use vertical
+# positioning (e.g. vertical dodging). Also, horizontal Geoms draw horizontal
+# legend keys to keep the appearance of your plots consistent.
+diamonds %>%
+    filter(z > 2 & z < 7) %>%
+    ggplot(aes(cut, price)) +
+    geom_boxplot() +
+    coord_flip()
+
+library(ggstance)
+diamonds %>%
+    filter(z > 2 & z < 7) %>%
+    ggplot(aes(price, cut)) +
+    geom_boxploth()
 
 # 4. One problem with boxplots is that they were developed in an era of much
 # smaller datasets and tend to display a prohibitively large number of
 # “outlying values.” One approach to remedy this problem is the letter value
 # plot. Install the lvplot package, and try using geom_lv() to display the
 # distribution of price versus cut. What do you learn? How do you interpret the
-# plots?
+# plots? ANS: that expensive cuts are more concentrated in the low price, fair
+# cuts vary much more (this forms two ends of a continuum) 
+library(lvplot)
+
+diamonds %>%
+    filter(z > 2 & z < 7) %>%
+    ggplot(aes(cut, price)) +
+    geom_lv() +
+    coord_flip()
 
 # 5. Compare and contrast geom_violin() with a faceted geom_his togram() , or a
 # colored geom_freqpoly() . What are the pros and cons of each method?
 
+# easy to abstract overall shape, no idea which one contains more counts
+diamonds %>%
+    filter(z > 2 & z < 7) %>%
+    ggplot(aes(cut, price)) +
+    geom_violin() +
+    coord_flip()
+
+# easier to compare in detail, but the scales are vastly different
+diamonds %>%
+    filter(z > 2 & z < 7) %>%
+    ggplot(aes(price, colour=cut)) +
+    geom_freqpoly()
+
+# shows the absolute scales well, tricky to compare in detail
+diamonds %>%
+    filter(z > 2 & z < 7) %>%
+    ggplot(aes(price)) +
+    geom_histogram() +
+    facet_wrap(~cut)
+
 # 6. If you have a small dataset, it’s sometimes useful to use geom_jitter() to
 # see the relationship between a continuous and categorical variable. The
 # ggbeeswarm package provides a number of methods similar to geom_jitter() .
-# List them and briefly describe what each one does.
-
+# List them and briefly describe what each one does. ANS: the method used for
+# distributing points (quasirandom, pseudorandom, smiley or frowney)
 
