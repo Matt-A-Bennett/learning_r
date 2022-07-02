@@ -15,5 +15,6 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] distributions
 - [x] missing values
 - [x] a categorical and continuous variable
+- [ ] two categorical variables
 
 
