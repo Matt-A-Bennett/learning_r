@@ -194,3 +194,27 @@ diamonds %>%
     ggplot(aes(x = color, y = cut)) +
         geom_tile(aes(fill = n))
            
+### two continuous variables ##################################################
+# 1. Instead of summarizing the conditional distribution with a box‐ plot, you
+# could use a frequency polygon. What do you need to consider when using
+# cut_width() versus cut_number() ? How does that impact a visualization of the
+# 2D distribution of carat and price ?
+
+# 2. Visualize the distribution of carat , partitioned by price .
+
+# 3. How does the price distribution of very large diamonds com‐ pare to small
+# diamonds. Is it as you expect, or does it surprise you?
+
+# 4. Combine two of the techniques you’ve learned to visualize the combined
+# distribution of cut , carat , and price .
+
+# 5. Two-dimensional plots reveal outliers that are not visible in
+# one-dimensional plots. For example, some points in the follow‐ ing plot have
+# an unusual combination of x and y values, which makes the points outliers
+# even though their x and y values appear normal when examined separately:
+
+ggplot(data = diamonds) +
+    geom_point(mapping = aes(x = x, y = y)) +
+    coord_cartesian(xlim = c(4, 11), ylim = c(4, 11))
+
+# Why is a scatterplot a better display than a binned plot for this case?
