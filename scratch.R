@@ -5,6 +5,8 @@ library(tidyverse)
 library(Lahman)
 source("../functions.R")
 
+options(width = 160)
+
 colnames(flights)
 cl()
 
