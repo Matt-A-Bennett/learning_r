@@ -89,8 +89,8 @@ flights %>%
 diamonds %>%
     filter(z > 2 & z < 7) %>%
     ggplot(aes(x, price)) +
-    # geom_boxplot()
     geom_point()
+    # geom_boxplot()
 
 # 3. Install the ggstance package, and create a horizontal boxplot. How does
 # this compare to using coord_flip() ? ANS: While coord_flip() can only flip a
@@ -156,12 +156,41 @@ diamonds %>%
 
 
 ### two categorical variables #################################################
-# 1. How could you rescale the count dataset to more clearly show
-# the distribution of cut within color, or color within cut?
+# 1. How could you rescale the count dataset to more clearly show the
+# distribution of cut within color, or color within cut?
+diamonds %>%
+    count(cut, color) %>%
+    group_by(cut) %>%
+    mutate(prop = n/sum(n)) %>%
+    ggplot(aes(x = color, y = cut)) +
+        geom_tile(aes(fill = prop))
+    
 
-# 2. Use geom_tile() together with dplyr to explore how average
-# flight delays vary by destination and month of year. What makes
-# the plot difficult to read? How could you improve it?
+# 2. Use geom_tile() together with dplyr to explore how average flight delays
+# vary by destination and month of year. What makes the plot difficult to read?
+# How could you improve it? ANS: remove flights that don't go every month, sort
+# dest by the av_delay
+flights %>%
+    group_by(dest) %>%
+    filter(!is.na(dep_delay) & sum(unique(month)) == sum(1:12)) %>%
+    group_by(dest, month) %>%
+    summarize(av_delay = mean(dep_delay, na.rm=T)) %>%
+    ungroup() %>%
+    mutate(dest = reorder(dest, av_delay)) %>%
+    ggplot(aes(x = month, y = dest)) +
+        geom_tile(aes(fill = av_delay))
 
-# 3. Why is it slightly better to use aes(x = color, y = cut) rather
-# than aes(x = cut, y = color) in the previous example?
+# 3. Why is it slightly better to use aes(x = color, y = cut) rather than aes(x
+# = cut, y = color) in the previous example? ANS: cut is at least ordered, so
+# low and high mean something (thus y axis), color is non-oredered (thus x
+# axis)... principle of least surprise
+
+diamonds %>%
+    ggplot() +
+    geom_count(mapping = aes(x = color, y = cut))
+
+diamonds %>%
+    count(color, cut) %>%
+    ggplot(aes(x = color, y = cut)) +
+        geom_tile(aes(fill = n))
+           
