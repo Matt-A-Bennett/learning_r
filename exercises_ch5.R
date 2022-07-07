@@ -198,18 +198,50 @@ diamonds %>%
 # 1. Instead of summarizing the conditional distribution with a box‐ plot, you
 # could use a frequency polygon. What do you need to consider when using
 # cut_width() versus cut_number() ? How does that impact a visualization of the
-# 2D distribution of carat and price ?
+# 2D distribution of carat and price ? ANS: cut_number adjusts so as to contain
+# the same amount of data per geom group. cut_width let's the chips fall where
+# they may (so, rare data are hard to see in the plot)
+
+diamonds %>%
+    ggplot(aes(color = cut_number(carat, 4), x = price)) +
+    geom_freqpoly()
+
+diamonds %>%
+    ggplot(aes(color = cut_width(carat, 2), x = price)) +
+    geom_freqpoly()
 
 # 2. Visualize the distribution of carat , partitioned by price .
+diamonds %>%
+    ggplot(aes(color = cut_number(price, 4), x = carat)) +
+    geom_freqpoly()
 
-# 3. How does the price distribution of very large diamonds com‐ pare to small
+diamonds %>%
+    ggplot(aes(color = cut_width(price, 4000), x = carat)) +
+    geom_freqpoly()
+
+diamonds %>%
+    ggplot(aes(group = cut_width(price, 2000), x = carat)) +
+    geom_boxplot(varwidth = T)
+
+# 3. How does the price distribution of very large diamonds compare to small
 # diamonds. Is it as you expect, or does it surprise you?
+diamonds %>%
+    filter(x > 8) %>%
+    ggplot(aes(color = cut_number(x, 4), x = price)) +
+    geom_freqpoly()
 
 # 4. Combine two of the techniques you’ve learned to visualize the combined
 # distribution of cut , carat , and price .
+diamonds %>% 
+    ggplot(aes(x = cut_number(carat, 6), y = price, color = cut)) +
+    geom_boxplot()
+
+diamonds %>% 
+    ggplot(aes(x = cut_number(price, 6), y = carat, color = cut)) +
+    geom_boxplot()
 
 # 5. Two-dimensional plots reveal outliers that are not visible in
-# one-dimensional plots. For example, some points in the follow‐ ing plot have
+# one-dimensional plots. For example, some points in the following plot have
 # an unusual combination of x and y values, which makes the points outliers
 # even though their x and y values appear normal when examined separately:
 
@@ -218,3 +250,5 @@ ggplot(data = diamonds) +
     coord_cartesian(xlim = c(4, 11), ylim = c(4, 11))
 
 # Why is a scatterplot a better display than a binned plot for this case?
+# ANS: when data is binned, individual points are hidden/obscured in the
+# summary

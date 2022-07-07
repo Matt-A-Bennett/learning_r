@@ -16,6 +16,6 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] missing values
 - [x] a categorical and continuous variable
 - [x] two categorical variables
-- [ ] two continuous variables
+- [x] two continuous variables
 
 
