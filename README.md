@@ -18,4 +18,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] two categorical variables
 - [x] two continuous variables
 
-
+#### Chapter 7 
+- [ ] tibbles with tibble
