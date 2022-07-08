@@ -19,4 +19,4 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] two continuous variables
 
 #### Chapter 7 
-- [ ] tibbles with tibble
+- [x] tibbles with tibble
