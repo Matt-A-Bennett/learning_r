@@ -45,7 +45,7 @@ table2 %>%
     geom_line() +
     geom_point(aes(color = country))
 
-### spreading and gathering ###################################################
+### pivoting ##################################################################
 # 1. Why are gather() and spread() not perfectly symmetrical? Carefully
 # consider the following example:
 

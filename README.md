@@ -27,4 +27,4 @@ Science](https://r4ds.had.co.nz/index.html)
 
 #### Chapter 9 
 - [x] tidy data
-- [ ] spreading and gathering
+- [ ] pivoting
