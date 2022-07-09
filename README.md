@@ -30,5 +30,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] pivoting
 - [x] separating and uniting
 - [x] missing values
-- [ ] case study
+- [x] case study
 
