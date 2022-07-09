@@ -135,15 +135,10 @@ tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
 
 ### missing values ############################################################
 # 1. Compare and contrast the fill arguments to pivot_wider() and complete().
+# ANS: fill_values in pivot_wider() fills with a given value. fill() in
+# complete() fills based on the non-missing data with a simple algorithm
 
-# 2. What does the direction argument to fill() do?
-
-
-
-# Compare and contrast the fill arguments to pivot_wider() and complete().
-
-# What does the direction argument to fill() do?
-
-# Compare and contrast the fill arguments to pivot_wider() and complete().
-
-# What does the direction argument to fill() do?
+# 2. What does the direction argument to fill() do? ANS: duplicates value
+# (within a group) downward, upward, or in both directions (if there are
+# missing values both above and below in a given group - otherwise you'd need
+# to call the fill() twice, once down, then up...)

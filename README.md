@@ -29,5 +29,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] tidy data
 - [x] pivoting
 - [x] separating and uniting
-- [ ] missing values
+- [x] missing values
 
