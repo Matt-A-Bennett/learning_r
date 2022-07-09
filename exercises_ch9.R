@@ -108,3 +108,20 @@ pivot_longer(preg, -pregnant, names_to = "sex", values_to = "count",
 mutate(female = (sex == 'female'),
        pregnant = (pregnant == 'yes')) %>%
 select(female, pregnant, count)
+
+### separating and uniting ####################################################
+# 1. What do the extra and fill arguments do in separate()? Experiment with the
+# various options for the following two toy datasets.
+
+tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+    separate(x, c("one", "two", "three"))
+
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+    separate(x, c("one", "two", "three"))
+
+# 2. Both unite() and separate() have a remove argument. What does it do? Why
+# would you set it to FALSE?
+
+# 3. Compare and contrast separate() and extract(). Why are there three
+# variations of separation (by position, by separator, and with groups), but
+# only one unite?

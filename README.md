@@ -28,3 +28,5 @@ Science](https://r4ds.had.co.nz/index.html)
 #### Chapter 9 
 - [x] tidy data
 - [x] pivoting
+- [ ] separating and uniting
+
