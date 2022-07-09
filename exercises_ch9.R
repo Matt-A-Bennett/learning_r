@@ -114,14 +114,20 @@ select(female, pregnant, count)
 # various options for the following two toy datasets.
 
 tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
-    separate(x, c("one", "two", "three"))
+    separate(x, c("one", "two", "three"),
+             sep = ',', extra = 'merge',
+             remove = F)
 
 tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
-    separate(x, c("one", "two", "three"))
+    separate(x, c("one", "two", "three"),
+            sep = ',', fill = 'right',
+            remove = F)
 
 # 2. Both unite() and separate() have a remove argument. What does it do? Why
-# would you set it to FALSE?
+# would you set it to FALSE? ANS: appends new columns to existing df (good for
+# seeing if things went well, and maybe you just don't want to drop the orig)
 
 # 3. Compare and contrast separate() and extract(). Why are there three
 # variations of separation (by position, by separator, and with groups), but
-# only one unite?
+# only one unite? ANS: unite() always puts things back together in the order
+# it's told end-to-end, so less precision needed than when separating
