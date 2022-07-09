@@ -23,4 +23,4 @@ Science](https://r4ds.had.co.nz/index.html)
 
 #### Chapter 8 
 - [x] introduction
-- [ ] parsing a vector
+- [x] parsing a vector
