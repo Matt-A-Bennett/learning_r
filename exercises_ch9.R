@@ -45,9 +45,9 @@ table2 %>%
     geom_line() +
     geom_point(aes(color = country))
 
-### pivoting ##################################################################
-# 1. Why are gather() and spread() not perfectly symmetrical? Carefully
-# consider the following example:
+### spreading and gathering ###################################################
+# 1. Why are pivot_longer() and pivot_wider() not perfectly symmetrical?
+# Carefully consider the following example:
 
 stocks <- tibble(
                  year = c(2015, 2015, 2016, 2016),
@@ -58,35 +58,37 @@ stocks <- tibble(
 stocks %>%
     spread(year, return) %>%
     gather("year", "return", `2015`:`2016`)
+# (Hint: look at the variable types and think about column names.)
 
-# (Hint: look at the variable types and think about column names.) Both
-# spread() and gather() have a convert argument. What does it do?
+# pivot_longer() has a names_ptypes argument, e.g.  names_ptypes = list(year =
+# double()). What does it do?
 
 # 2. Why does this code fail?
 
-table4a %>%
-    gather(1999, 2000, key = "year", value = "cases")
-#> Error in eval(expr, envir, enclos):
-#> Position must be between 0 and n
-
-# 3. Why does spreading this tibble fail? How could you add a new column to fix
-# the problem?
+table4a %>% 
+  pivot_longer(c(1999, 2000), names_to = "year", values_to = "cases")
+#> Error: Can't subset columns that don't exist.
+#> ✖ Locations 1999 and 2000 don't exist.
+#> ℹ There are only 3 columns.
+# 3. What would happen if you widen this table? Why? How could you add a new
+# column to uniquely identify each value?
+# 3.
 
 people <- tribble(
-                  ~name,            ~key,    ~value,
-                  #-----------------|--------|------
-                  "Phillip Woods", "age", 45,
-                  "Phillip Woods", "height", 186,
-                  "Phillip Woods", "age", 50,
-                  "Jessica Cordero", "age", 37,
-                  "Jessica Cordero", "height", 156
+                  ~name,               ~key,      ~value,
+                  #------------------|----------|-------
+                  "Phillip  Woods",    "age",     45,
+                  "Phillip  Woods",    "height",  186,
+                  "Phillip  Woods",    "age",     50,
+                  "Jessica  Cordero",  "age",     37,
+                  "Jessica  Cordero",  "height",  156
 )
 
-# 4. Tidy this simple tibble. Do you need to spread or gather it? What are the
-# variables?
+# 4. Tidy the simple tibble below. Do you need to make it wider or longer? What
+# are the variables?
 
 preg <- tribble(
-                ~pregnant, ~male, ~female,
-                "yes", NA, 10,
-                "no", 20, 12
+                ~pregnant,  ~male,  ~female,
+                "yes",      NA,     10,
+                "no",       20,     12
 )
