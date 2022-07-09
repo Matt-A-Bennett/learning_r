@@ -26,4 +26,4 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] parsing a vector
 
 #### Chapter 9 
-- [ ] tidy data
+- [x] tidy data
