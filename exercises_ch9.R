@@ -131,3 +131,19 @@ tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
 # variations of separation (by position, by separator, and with groups), but
 # only one unite? ANS: unite() always puts things back together in the order
 # it's told end-to-end, so less precision needed than when separating
+
+
+### missing values ############################################################
+# 1. Compare and contrast the fill arguments to pivot_wider() and complete().
+
+# 2. What does the direction argument to fill() do?
+
+
+
+# Compare and contrast the fill arguments to pivot_wider() and complete().
+
+# What does the direction argument to fill() do?
+
+# Compare and contrast the fill arguments to pivot_wider() and complete().
+
+# What does the direction argument to fill() do?
