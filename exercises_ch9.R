@@ -45,35 +45,41 @@ table2 %>%
     geom_line() +
     geom_point(aes(color = country))
 
-### spreading and gathering ###################################################
+### pivoting ##################################################################
 # 1. Why are pivot_longer() and pivot_wider() not perfectly symmetrical?
 # Carefully consider the following example:
-
 stocks <- tibble(
                  year = c(2015, 2015, 2016, 2016),
                  half = c( 1, 2, 1, 2),
                  return = c(1.88, 0.59, 0.92, 0.17)
 )
 
-stocks %>%
-    spread(year, return) %>%
-    gather("year", "return", `2015`:`2016`)
+stocks %>% 
+    pivot_wider(names_from = year, values_from = return) %>% 
+    pivot_longer(`2015`:`2016`, names_to = "year", values_to = "return")
 # (Hint: look at the variable types and think about column names.)
+# ANS: taking the columns names to values doesn't know to make them numbers...
 
 # pivot_longer() has a names_ptypes argument, e.g.  names_ptypes = list(year =
-# double()). What does it do?
+# double()). What does it do? ANS: throw error if the type is not as expected
+stocks %>% 
+    pivot_wider(names_from = year, values_from = return) %>% 
+    pivot_longer(`2015`:`2016`, names_to = "year", values_to = "return",
+                 names_ptypes = list(year = double()))
 
-# 2. Why does this code fail?
+# ANS: we can transform them on the fly with *_transform()
+stocks %>% 
+    pivot_wider(names_from = year, values_from = return) %>% 
+    pivot_longer(`2015`:`2016`, names_to = "year", values_to = "return",
+                 names_transform = list(year = as.integer))
 
+# 2. Why does this code fail? ANS need to backtick c(`1999`, `2000`)
 table4a %>% 
   pivot_longer(c(1999, 2000), names_to = "year", values_to = "cases")
-#> Error: Can't subset columns that don't exist.
-#> ✖ Locations 1999 and 2000 don't exist.
-#> ℹ There are only 3 columns.
-# 3. What would happen if you widen this table? Why? How could you add a new
-# column to uniquely identify each value?
-# 3.
 
+# 3. What would happen if you widen this table? Why? How could you add a new
+# column to uniquely identify each value? ANS: Error because Phillip Woods is
+# in there twice (age 45 and 50...)
 people <- tribble(
                   ~name,               ~key,      ~value,
                   #------------------|----------|-------
@@ -84,11 +90,21 @@ people <- tribble(
                   "Jessica  Cordero",  "height",  156
 )
 
+people %>% 
+    group_by(name, key) %>%
+    mutate(obs = row_number()) %>%
+    pivot_wider(names_from = key, values_from = value)
+
 # 4. Tidy the simple tibble below. Do you need to make it wider or longer? What
 # are the variables?
-
 preg <- tribble(
                 ~pregnant,  ~male,  ~female,
                 "yes",      NA,     10,
                 "no",       20,     12
 )
+
+pivot_longer(preg, -pregnant, names_to = "sex", values_to = "count",
+             values_drop_na = TRUE) %>%
+mutate(female = (sex == 'female'),
+       pregnant = (pregnant == 'yes')) %>%
+select(female, pregnant, count)
