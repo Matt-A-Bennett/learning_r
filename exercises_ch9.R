@@ -142,3 +142,45 @@ tibble(x = c("a,b,c", "d,e", "f,g,i")) %>%
 # (within a group) downward, upward, or in both directions (if there are
 # missing values both above and below in a given group - otherwise you'd need
 # to call the fill() twice, once down, then up...)
+
+### case study ################################################################
+who_tidy <- who %>%
+    pivot_longer(cols = new_sp_m014:newrel_f65,
+                 names_to = "key",
+                 values_to = "cases",
+                 values_drop_na = TRUE) %>%
+    mutate(key = str_replace(key, 'newrel', 'new_rel')) %>%
+    separate(key, c("new", "smear_pos", "sex_age")) %>%
+    select(-c(new, iso2, iso3)) %>%
+    separate(sex_age, c("sex", "age"), sep = 1)
+
+# 1. In this case study I set values_drop_na = TRUE just to make it easier to
+# check that we had the correct values. Is this reasonable? Think about how
+# missing values are represented in this dataset. Are there implicit missing
+# values? What’s the difference between an NA and zero?
+
+# 2. What happens if you neglect the mutate() step? (mutate(names_from =
+# stringr::str_replace(key, "newrel", "new_rel"))) ANS: the first separate()
+# function would have failed (and we'd have to use the fill() argument and do
+# more work overall.
+
+# 3. I claimed that iso2 and iso3 were redundant with country. Confirm this
+# claim. ANS: 219 countries each time (so yes)
+who %>% 
+    group_by(country) %>%
+    count(iso2) %>%
+    count(country) %>%
+    ungroup() %>%
+    summarise(n()) 
+
+# 4. For each country, year, and sex compute the total number of cases of TB.
+# Make an informative visualisation of the data.
+who_tidy %>%
+    group_by(country, year, sex) %>%
+    summarise(cases = mean(cases, na.rm = T)) %>%
+    ggplot(aes(year, cases, color = country)) + 
+    geom_line() +
+    geom_point(aes(size = cases)) +
+    theme(legend.position = "none") +
+    facet_wrap(~sex)
+
