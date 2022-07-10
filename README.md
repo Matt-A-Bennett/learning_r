@@ -32,3 +32,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] missing values
 - [x] case study
 
+#### Chapter 10 
+- [ ] introduction
