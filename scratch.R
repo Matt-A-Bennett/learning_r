@@ -12,3 +12,4 @@ theme_set(dark_theme_gray(base_size = 28)
 cl()
 
 colnames(flights)
+airports
