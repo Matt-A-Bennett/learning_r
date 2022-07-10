@@ -15,3 +15,21 @@
 # usual fly on them. How might you represent that data as a data frame? What
 # would be the primary keys of that table? How would it connect to the existing
 # tables? ANS: year, month, day
+
+
+### keys ######################################################################
+# 1. Add a surrogate key to flights.
+
+# 2. Identify the keys in the following datasets:
+# a. Lahman::Batting
+# b. babynames::babynames
+# c. nasaweather::atmos
+# d. fueleconomy::vehicles
+# e. ggplot2::diamonds
+# (You might need to install some packages and read some documentation.)
+
+# 3. Draw a diagram illustrating the connections between the Batting, Master,
+# and Salaries tables in the Lahman package. Draw another diagram that shows
+# the relationship between Mas ter, Managers, and AwardsManagers. How would you
+# characterize the relationship between the Batting, Pitching, and Fielding
+# tables?
