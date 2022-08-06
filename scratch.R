@@ -1,5 +1,6 @@
-library(nycflights13)
 library(tidyverse)
+library(stringr)
+library(nycflights13)
 library(Lahman)
 library(ggdark)
 source("../functions.R")
@@ -12,5 +13,4 @@ theme_set(dark_theme_gray(base_size = 28)
 
 cl()
 
-colnames(airports)
-airports
+str <- c("a", "b", "c", "d", "e")
