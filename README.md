@@ -39,4 +39,7 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] filtering joins
 #### Chapter 11 
 - [x] introduction
-
+- [x] basic regular expressions
+- [x] anchors
+- [x] character classes and alternatives
+ 
