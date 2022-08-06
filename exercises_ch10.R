@@ -1,4 +1,4 @@
-### introduction ##############################################################
+# ## introduction ##############################################################
 # 1. Imagine you wanted to draw (approximately) the route each plane flies from
 # its origin to its destination. What variables would you need? What tables
 # would you need to combine? ANS flight -> origin -> faa -> lat + lon -> dest
@@ -85,7 +85,83 @@ Pitching %>%
     count(playerID, yearID, stint) %>%
     filter(n > 1)
 
+### joins #####################################################################
+# 1. Compute the average delay by destination, then join on the airports data
+# frame so you can show the spatial distribution of delays. Here’s an easy way
+# to draw a map of the United States:
+
+flights <- flights %>%
+    group_by(dest) %>%
+    mutate(av_delay = mean(arr_delay, na.rm=T), .after=day)
+
+airports <- airports %>%
+    inner_join(flights, c("faa" = "dest")) %>%
+    select(c(faa:tzone, av_delay))
 
 
+airports %>%
+    ggplot(aes(lon, lat, color=av_delay)) +
+    borders("state") +
+    geom_point() +
+    coord_quickmap()
 
+# You might want to use the size or color of the points to display the average
+# delay for each airport.
+
+# 2. Add the location of the origin and destination (i.e., the lat and lon) to
+# flights.
+airports_locations <- airports %>%
+    select(faa, lat, lon)
+
+flights_loc <- flights %>%
+    left_join(airports_locations, c("origin" = "faa")) %>%
+    left_join(airports_locations, c("dest" = "faa"),
+              suffix = c("_origin", "_dest")) %>%
+    select(year:day, hour, origin, dest, lat_origin:lon_dest)
+
+# 3. Is there a relationship between the age of a plane and its delays?
+
+flights %>%
+    inner_join(planes, "tailnum") %>%
+    group_by(tailnum) %>%
+    mutate(av_delay = mean(arr_delay, na.rm = T), .after = day) %>%
+    group_by(year.y) %>%
+    mutate(year_av_delay = mean(av_delay, na.rm = T), .after = av_delay) %>%
+    ggplot() +
+    geom_point(aes(year.y, year_av_delay))
+
+# 4. What weather conditions make it more likely to see a delay? ANS: most have
+# an intuitive effect
+df <- flights %>%
+    inner_join(weather, c("origin", "year", "month", "day", "hour")) %>%
+    select(year:day, arr_delay,  temp:visib)
+
+df %>%
+    group_by(wind_dir) %>%
+    summarise(delay = mean(arr_delay, na.rm = T)) %>%
+    ggplot(aes(wind_dir, delay)) +
+    geom_point() +
+    geom_smooth()
+colnames(df)
+
+# 5. What happened on June 13, 2013? Display the spatial pattern of delays, and
+# then use Google to cross-reference with the weather. ANS: Derechos
+airports_locations <- airports %>%
+    select(faa, lat, lon)
+
+spatial_weather <- flights %>%
+    left_join(airports_locations, c("origin" = "faa")) %>%
+    left_join(airports_locations, c("dest" = "faa"),
+              suffix = c("_origin", "_dest")) %>% 
+    inner_join(weather, c("origin", "year", "month", "day", "hour")) %>%
+    select(year:day, hour, arr_delay, tailnum, origin, dest, lat_origin:lon_dest) %>%
+    filter(year == 2013, month == 6, day == 13)
+
+spatial_weather %>%
+    group_by(dest) %>%
+    mutate(av_delay = mean(arr_delay, na.rm = T), .after = arr_delay) %>%
+    ggplot(aes(lon_dest, lat_dest, color = av_delay, size = av_delay)) +
+    borders("state") +
+    geom_point() +
+    coord_quickmap()
 
