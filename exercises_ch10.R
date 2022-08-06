@@ -1,4 +1,4 @@
-# ## introduction ##############################################################
+### introduction ##############################################################
 # 1. Imagine you wanted to draw (approximately) the route each plane flies from
 # its origin to its destination. What variables would you need? What tables
 # would you need to combine? ANS flight -> origin -> faa -> lat + lon -> dest
@@ -85,7 +85,7 @@ Pitching %>%
     count(playerID, yearID, stint) %>%
     filter(n > 1)
 
-### joins #####################################################################
+### mutating joins ############################################################
 # 1. Compute the average delay by destination, then join on the airports data
 # frame so you can show the spatial distribution of delays. Here’s an easy way
 # to draw a map of the United States:
@@ -165,3 +165,24 @@ spatial_weather %>%
     geom_point() +
     coord_quickmap()
 
+
+### filtering joines ##########################################################
+# 1. What does it mean for a flight to have a missing tailnum ? What do the
+# tail numbers that don’t have a matching record in planes have in common?
+# (Hint: one variable explains ~90% of the problems.)
+
+# 2. Filter flights to only show flights with planes that have flown at least
+# 100 flights.
+
+# 3. Combine fueleconomy::vehicles and fueleconomy::common to find only the
+# records for the most common models.
+
+# 4. Find the 48 hours (over the course of the whole year) that have the worst
+# delays. Cross-reference it with the weather data. Can you see any patterns?
+
+# 5. What does anti_join(flights, airports, by = c("dest" = "faa")) tell you?
+# What does anti_join(airports, flights, by = c("faa" = "dest")) tell you?
+
+# 6. You might expect that there’s an implicit relationship between plane and
+# airline, because each plane is flown by a single airline. Confirm or reject
+# this hypothesis using the tools you’ve learned in the preceding section.

@@ -35,4 +35,5 @@ Science](https://r4ds.had.co.nz/index.html)
 #### Chapter 10 
 - [x] introduction
 - [x] keys
-- [ ] joins
+- [x] mutating joins
+- [ ] filtering joins
