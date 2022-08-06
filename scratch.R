@@ -3,7 +3,7 @@ library(tidyverse)
 library(Lahman)
 library(ggdark)
 source("../functions.R")
-options(width = 159)
+options(width = 158)
 
 theme_set(dark_theme_gray(base_size = 28)
           + theme(plot.background = element_rect(fill = "grey10"),
