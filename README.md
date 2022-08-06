@@ -36,4 +36,4 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] introduction
 - [x] keys
 - [x] mutating joins
-- [ ] filtering joins
+- [x] filtering joins

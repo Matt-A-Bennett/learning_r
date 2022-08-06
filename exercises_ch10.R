@@ -167,22 +167,53 @@ spatial_weather %>%
 
 
 ### filtering joines ##########################################################
-# 1. What does it mean for a flight to have a missing tailnum ? What do the
-# tail numbers that don’t have a matching record in planes have in common?
-# (Hint: one variable explains ~90% of the problems.)
+# 1. What does it mean for a flight to have a missing tailnum? What do the tail
+# numbers that don’t have a matching record in planes have in common? (Hint:
+# one variable explains ~90% of the problems.) ANS: cancelled flight
+flights %>%
+    filter(is.na(tailnum))
 
 # 2. Filter flights to only show flights with planes that have flown at least
 # 100 flights.
+top100 <- flights %>%
+    filter(!is.na(tailnum)) %>%
+    count(tailnum) %>%
+    filter(n >= 100)
+
+flights %>%
+    semi_join(top100, by = "tailnum")
 
 # 3. Combine fueleconomy::vehicles and fueleconomy::common to find only the
 # records for the most common models.
+fueleconomy::vehicles %>%
+    semi_join(fueleconomy::common)
 
 # 4. Find the 48 hours (over the course of the whole year) that have the worst
 # delays. Cross-reference it with the weather data. Can you see any patterns?
+flights %>%
+    group_by(year, month, day) %>%
+    mutate(av_delay = mean(arr_delay, na.rm = T), .after = day) %>%
+    mutate(two_day = (lag(av_delay) + av_delay)/2, .after = av_delay) %>%
+    arrange(desc(two_day)) %>%
+    head(n=1)
+
+weather %>%
+    filter(year == 2013, month == 3, day == 8)
 
 # 5. What does anti_join(flights, airports, by = c("dest" = "faa")) tell you?
-# What does anti_join(airports, flights, by = c("faa" = "dest")) tell you?
+# What does anti_join(airports, flights, by = c("faa" = "dest")) tell you? ANS:
+# some flights didn't go to an airport listed in airports
+anti_join(flights, airports, by = c("dest" = "faa")) %>%
+    distinct(dest)
 
 # 6. You might expect that there’s an implicit relationship between plane and
 # airline, because each plane is flown by a single airline. Confirm or reject
-# this hypothesis using the tools you’ve learned in the preceding section.
+# this hypothesis using the tools you’ve learned in the preceding section. ANS:
+# it seems that manufacturers do not make planes uniformly for all airlines.
+flights %>% 
+    inner_join(planes, "tailnum") %>%
+    count(carrier, manufacturer) %>%
+    arrange(desc(n)) %>%
+    ggplot() +
+    geom_histogram(aes(n))
+
