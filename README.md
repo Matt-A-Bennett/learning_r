@@ -42,4 +42,7 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] basic regular expressions
 - [x] anchors
 - [x] character classes and alternatives
+- [x] repetition
+- [x] grouping and backreferences 
+- [ ] detect matches 
  
