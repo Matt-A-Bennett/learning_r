@@ -218,3 +218,15 @@ tibble(sentence = sentences) %>%
     filter(!is.na(before)) %>%
     print(n=Inf)
 
+### replacing matches #########################################################
+# 1. Replace all forward slashes in a string with backslashes.
+str_replace_all("C://I/am/a/bad/path/", "/", "\\\\")
+
+# 2. Implement a simple version of str_to_lower() using replace_all() .
+replacements <- setNames(letters, LETTERS)
+str_replace_all("CamelCase", replacements)
+
+# 3. Switch the first and last letters in words . Which of those strings are
+# still words?
+switched <- str_replace_all(words, "^(\\w)(.*)(\\w)$", "\\3\\2\\1")
+words[switched %in% words]

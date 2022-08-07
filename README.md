@@ -47,4 +47,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] detect matches 
 - [x] extract matches 
 - [x] grouped matches 
+- [x] replacing matches 
  
