@@ -139,6 +139,37 @@ myfunc <- function(str) {
 # twice). ANS: "(..)[a-z]*\\1"
 
 # c. Contain one letter repeated in at least three places (e.g., “eleven”
-# contains three “e”s). "(.)[a-z]*\\1[a-z]*\\1"
+# contains three “e”s). ANS: "(.)[a-z]*\\1[a-z]*\\1"
 
 ### detect matches ############################################################
+# 1. For each of the following challenges, try solving it by using both a
+# single regular expression, and a combination of multiple str_detect() calls:
+
+# a. Find all words that start or end with x .
+str_subset(words, "^x|x$")
+start_x <- str_detect(words, "^x")
+end_x <- str_detect(words, "x$")
+words[start_x | end_x]
+
+# b. Find all words that start with a vowel and end with a consonant.
+str_subset(words, "^[aeiou].*[^aeiou]$")
+start_vowel <- str_detect(words, "^[aeiou]")
+end_consonant <- str_detect(words, "[^aeiou]$")
+words[start_vowel & end_consonant]
+
+# c. Are there any words that contain at least one of each different vowel?
+# No
+words[str_detect(words, "a") &
+      str_detect(words, "e") &
+      str_detect(words, "i") &
+      str_detect(words, "o") &
+      str_detect(words, "u")]
+
+# d. What word has the highest number of vowels? What word has the highest
+# proportion of vowels? (Hint: what is the denominator?)
+
+n_vowels <- str_count(words, "[aeiou]")
+word_lengths <- str_length(words)
+
+words[max(n_vowels / word_lengths)]
+words[which(n_vowels == max(n_vowels))]

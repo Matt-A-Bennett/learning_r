@@ -44,5 +44,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] character classes and alternatives
 - [x] repetition
 - [x] grouping and backreferences 
-- [ ] detect matches 
+- [x] detect matches 
  
