@@ -173,3 +173,16 @@ word_lengths <- str_length(words)
 
 words[max(n_vowels / word_lengths)]
 words[which(n_vowels == max(n_vowels))]
+
+### extract matches ###########################################################
+# 1. In the previous example, you might have noticed that the regular
+# expression matched “flickered,” which is not a color. Modify the regex to fix
+# the problem.
+
+# 2. From the Harvard sentences data, extract:
+
+# a. The first word from each sentence.
+
+# b. All words ending in ing .
+
+# c. All plurals.
