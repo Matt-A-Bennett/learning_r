@@ -177,12 +177,24 @@ words[which(n_vowels == max(n_vowels))]
 ### extract matches ###########################################################
 # 1. In the previous example, you might have noticed that the regular
 # expression matched “flickered,” which is not a color. Modify the regex to fix
-# the problem.
+# the problem. ANS: "\\bred\\b"
+
+colors <- c("\\bred\\b", "blue", "green")
+pattern <- str_c(colors, collapse = "|")
+matches <- str_subset(sentences, pattern)
+str_extract_all(matches, pattern, simplify = T)
 
 # 2. From the Harvard sentences data, extract:
 
 # a. The first word from each sentence.
+str_extract_all(sentences, "^[A-Za-z]+", simplify = T)
 
 # b. All words ending in ing .
+pattern <- "\\b\\w+ing\\b"
+matches <- str_subset(sentences, pattern)
+str_extract_all(matches, pattern, simplify = T)
 
 # c. All plurals.
+pattern <- "\\b\\w{3,}s\\b"
+matches <- str_subset(sentences, ends_s)
+str_extract_all(matches, pattern, simplify = T)
