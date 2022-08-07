@@ -198,3 +198,23 @@ str_extract_all(matches, pattern, simplify = T)
 pattern <- "\\b\\w{3,}s\\b"
 matches <- str_subset(sentences, ends_s)
 str_extract_all(matches, pattern, simplify = T)
+
+### grouped matches ###########################################################
+# 1. Find all words that come after a “number” like “one”, “two”, “three”, etc.
+# Pull out both the number and the word.
+numbers <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
+pattern <- str_c(numbers, collapse = "|")
+pattern <- glue("\\b({pattern}) (\\w+)")
+tibble(sentence = sentences) %>%
+    extract(sentence, c("number", "after"), pattern, remove = F) %>%
+    filter(!is.na(number)) %>%
+    print(n=Inf)
+
+# 2. Find all contractions. Separate out the pieces before and after the
+# apostrophe.
+pattern <- "(\\w+)'(\\w+)"
+tibble(sentence = sentences) %>%
+    extract(sentence, c("before", "after"), pattern, remove = F) %>%
+    filter(!is.na(before)) %>%
+    print(n=Inf)
+

@@ -46,4 +46,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] grouping and backreferences 
 - [x] detect matches 
 - [x] extract matches 
+- [x] grouped matches 
  
