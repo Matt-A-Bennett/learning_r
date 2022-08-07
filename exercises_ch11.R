@@ -230,3 +230,15 @@ str_replace_all("CamelCase", replacements)
 # still words?
 switched <- str_replace_all(words, "^(\\w)(.*)(\\w)$", "\\3\\2\\1")
 words[switched %in% words]
+
+### splitting #################################################################
+# 1. Split up a string like "apples, pears, and bananas" into individual
+# components.
+str_split("apples, pears, and bananas", "(, and |, )", simplify = T)
+
+# 2. Why is it better to split up by boundary("word") than " " ? ANS:
+# punctuation, isn't part of the word!
+
+# 3. What does splitting with an empty string ( "" ) do? Experiment, and then
+# read the documentation. ANS: separates by character
+str_split("apples, pears, and bananas", "", simplify = T)
