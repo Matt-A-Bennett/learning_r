@@ -3,6 +3,7 @@ library(stringr)
 library(nycflights13)
 library(Lahman)
 library(ggdark)
+library(glue)
 source("../functions.R")
 options(width = 158)
 
