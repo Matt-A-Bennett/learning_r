@@ -3,7 +3,7 @@ Going through the exercises in [R for Data
 Science](https://r4ds.had.co.nz/index.html)
 
 ### Exercises Done so far:
-#### Chapter 3 
+#### Chapter 3: Data transformation with dplyr
 - [x] filter
 - [x] arrange
 - [x] select
@@ -11,33 +11,33 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] grouped summaries
 - [x] grouped mutates and filters
 
-#### Chapter 5 
+#### Chapter 5: Exploration data analysis
 - [x] distributions
 - [x] missing values
 - [x] a categorical and continuous variable
 - [x] two categorical variables
 - [x] two continuous variables
 
-#### Chapter 7 
+#### Chapter 7: Tibbles with tibble
 - [x] tibbles with tibble
 
-#### Chapter 8 
+#### Chapter 8: Data import with readr
 - [x] introduction
 - [x] parsing a vector
 
-#### Chapter 9 
+#### Chapter 9: Tidy data with tidyr
 - [x] tidy data
 - [x] pivoting
 - [x] separating and uniting
 - [x] missing values
 - [x] case study
 
-#### Chapter 10 
+#### Chapter 10: Relational data with dplyr 
 - [x] introduction
 - [x] keys
 - [x] mutating joins
 - [x] filtering joins
-#### Chapter 11 
+#### Chapter 11: Strings with stringr 
 - [x] introduction
 - [x] basic regular expressions
 - [x] anchors
@@ -51,4 +51,7 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] splitting
 - [x] other types of pattern
 - [x] stringi
+
+#### Chapter 12: Factors with forcats
+- [ ] creating factors
  
