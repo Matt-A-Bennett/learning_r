@@ -242,3 +242,34 @@ str_split("apples, pears, and bananas", "(, and |, )", simplify = T)
 # 3. What does splitting with an empty string ( "" ) do? Experiment, and then
 # read the documentation. ANS: separates by character
 str_split("apples, pears, and bananas", "", simplify = T)
+
+### other types of pattern ####################################################
+# 1. How would you find all strings containing \ with regex() versus with
+# fixed() ?
+str_showmatches("my \\ slash" , regex("\\\\"))
+str_showmatches("my \\ slash" , fixed("\\"))
+
+# 2. What are the five most common words in sentences ?
+pattern <- "\\b\\w+\\b"
+matches <- unlist(str_extract_all(sentences, pattern))
+df <- tibble(words = matches)
+
+df %>%
+    filter(words != "") %>%
+    mutate(words = str_to_lower(words)) %>%
+    count(words, sort = T)
+
+apropos("str.*show")
+dir(pattern=".*")
+
+### stringi ###################################################################
+# 1. Find the stringi functions that:
+
+# a. Count the number of words. ANS: stri_count() and stri_count_words() 
+
+# b. Find duplicated strings. ANS: stri_duplicated()
+
+# c. Generate random text. ANS: stri_rand_strings()
+
+# 2. How do you control the language that stri_sort() uses for sorting?
+# ANS: be setting <locale> arg...

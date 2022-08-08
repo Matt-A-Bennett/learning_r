@@ -49,4 +49,6 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] grouped matches 
 - [x] replacing matches 
 - [x] splitting
+- [x] other types of pattern
+- [x] stringi
  
