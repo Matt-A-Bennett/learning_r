@@ -53,5 +53,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] stringi
 
 #### Chapter 12: Factors with forcats
-- [ ] creating factors
+- [x] creating factors
  
