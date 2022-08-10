@@ -20,3 +20,29 @@ gss_cat %>%
 gss_cat %>%
     filter(denom != "No denomination" & denom != "Not applicable") %>%
     count(relig, sort = T)
+
+### modifying factor orde #####################################################
+# 1. There are some suspiciously high numbers in tvhours . Is the mean‐ a good
+# summary?
+gss_cat %>%
+    # group_by(relig) %>%
+    # summarize(
+    #           tvhours = mean(tvhours, na.rm = T),
+    #           n = n()
+    #           ) %>%
+    ggplot(aes(tvhours, fct_reorder(relig, tvhours))) +
+    geom_boxplot()
+
+# 2. For each factor in gss_cat identify whether the order of the levels is
+# arbitrary or principled.
+levels(gss_cat$marital) # arbitrary
+levels(gss_cat$race)    # arbitrary
+levels(gss_cat$rincome) # principled
+levels(gss_cat$partyid) # principled
+levels(gss_cat$relig)   # arbitrary
+levels(gss_cat$denom)   # arbitrary
+
+# 3. Why did moving “Not applicable” to the front of the levels move it to the
+# bottom of the plot? ANS: because first-last factors are plotted from bottom
+# to top on the Y axis...
+    
