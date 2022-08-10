@@ -45,4 +45,28 @@ levels(gss_cat$denom)   # arbitrary
 # 3. Why did moving “Not applicable” to the front of the levels move it to the
 # bottom of the plot? ANS: because first-last factors are plotted from bottom
 # to top on the Y axis...
+
+### modifying factor levels ###################################################
+# 1. How have the proportions of people identifying as Democrat, Republican,
+# and Independent changed over time?
+gss_cat %>%
+    mutate(partyid = fct_collapse(partyid,
+      "democrat" = c("Not str democrat", "Strong democrat"),
+      "republican" = c("Not str republican", "Strong republican"),
+      "independent" = c("Ind,near dem", "Ind,near rep", "Independent"))) %>%
+    filter(partyid %in% c("democrat", "republican", "independent")) %>%
+    group_by(year) %>%
+    mutate(year_total = n()) %>%
+    group_by(year, partyid) %>%
+    mutate(prop = n()/year_total) %>%
+    ggplot(aes(year, prop, color=partyid)) +
+    geom_line() +
+    geom_point()
+
+# 2. How could you collapse rincome into a small set of categories?
+gss_cat %>%
+    mutate(rincome = fct_lump(rincome, n = 8)) %>%
+    group_by(rincome) %>%
+    count()
+
     

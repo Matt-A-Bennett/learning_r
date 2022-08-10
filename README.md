@@ -55,4 +55,5 @@ Science](https://r4ds.had.co.nz/index.html)
 #### Chapter 12: Factors with forcats
 - [x] creating factors
 - [x] modifying factor order
+- [x] modifying factor levels
  
