@@ -56,4 +56,7 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] creating factors
 - [x] modifying factor order
 - [x] modifying factor levels
+
+#### Chapter 13: Dates and times with lubridate
+- [ ] creating date/times
  
