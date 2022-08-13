@@ -60,4 +60,5 @@ Science](https://r4ds.had.co.nz/index.html)
 #### Chapter 13: Dates and times with lubridate
 - [x] creating date/times
 - [x] date-time components
+- [x] time spans
  

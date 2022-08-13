@@ -108,4 +108,51 @@ flights_dt %>%
     geom_line() +
     geom_smooth()
 
+### time spans ################################################################
+# 1. Why is there months() but no dmonths() ? ANS: becuase months are
+# particularly dumb.
 
+# 2. Explain days(overnight * 1) to someone who has just started learning R.
+# How does it work? ANS: Seems like there was an update to remove this quirk
+
+
+flights_dt_1 <- flights_dt %>%
+    mutate(
+           overnight = arr_time < dep_time,
+           arr_time = arr_time + days(overnight),
+           sched_arr_time = sched_arr_time + days(overnight)
+    )
+
+flights_dt_2 <- flights_dt %>%
+    mutate(
+           overnight = arr_time < dep_time,
+           arr_time = arr_time + days(overnight * 1),
+           sched_arr_time = sched_arr_time + days(overnight * 1)
+    )
+
+flights_dt_1 %>%
+    filter(overnight, arr_time < dep_time)
+
+flights_dt_2 %>%
+    filter(overnight, arr_time < dep_time)
+
+# 3. Create a vector of dates giving the first day of every month in 2015.
+# Create a vector of dates giving the first day of every month in the current
+# year.
+ymd("2015, 01, 01") + months(0:11)
+floor_date(today(), "year") + months(0:11)
+
+# 4. Write a function that, given your birthday (as a date), returns how old
+# you are in years.
+age <- function(birthday) {
+    diff = (birthday %--% today()) / years(1)
+    return(diff)
+}
+
+birthday <- dmy("19-11-1989")
+age(birthday)
+
+
+# 5. Why can’t the following work? ANS: missing paren, and months(1) doesn't
+# contain how long the interval is
+(today() %--% (today() + years(1))) / months(1) 
