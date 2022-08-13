@@ -102,7 +102,7 @@ flights %>%
 flights_dt %>%
     mutate(early = dep_time < sched_dep_time, minute = minute(dep_time)) %>%
     group_by(minute) %>%
-    summarise(prop_early = sum(early)) %>%
+    summarise(prop_early = mean(early)) %>%
     ggplot(aes(minute, prop_early)) +
     geom_point() +
     geom_line() +
