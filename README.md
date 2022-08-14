@@ -69,4 +69,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] function arguments
 
 #### Chapter 16: Vectors
-- [ ] important types of atomic vectors
+- [x] important types of atomic vectors
+- [ ] using atomic vectors
