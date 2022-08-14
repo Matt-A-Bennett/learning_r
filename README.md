@@ -62,3 +62,6 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] date-time components
 - [x] time spans
  
+#### Chapter 15: Functions
+- [x] when should you write a function?
+- [ ] functions are for humans and computers
