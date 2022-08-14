@@ -207,3 +207,31 @@ switch("e", "?",
 )
 
 # Experiment, then carefully read the documentation
+
+### function arguments ########################################################
+# 1. What does commas(letters, collapse = "-") do? Why?
+str_c(letters, collapse = "-", collapse = ", ")
+
+commas <- function(...) stringr::str_c(..., collapse = ", ")
+
+# 2. It’d be nice if you could supply multiple characters to the pad argument,
+# e.g., rule("Title", pad = "-+") . Why doesn’t this currently work? How could
+# you fix it?
+
+rule <- function(..., pad = "-") {
+    title <- paste0(...)
+    width <- (getOption("width") - nchar(title) - 5)
+    width <- floor(width / nchar(pad))
+    cat(title, " ", stringr::str_dup(pad, width), "\n", sep = "")
+}
+rule("Important output", pad = "-+")
+
+# 3. What does the trim argument to mean() do? When might you use it?
+# ANS: drop a proportion of values from extreme ends of range (so mean is not
+# 'pulled' too much by outliers)
+
+# 4. The default value for the method argument to cor() is 
+c("pearson", "kendall", "spearman")
+
+# What does that mean? What value is used by default? ANS: pearson by default
+# (but can be one of the others)

@@ -66,3 +66,4 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] when should you write a function?
 - [x] functions are for humans and computers
 - [x] conditional execution
+- [x] function arguments
