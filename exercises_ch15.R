@@ -121,3 +121,89 @@ replicate <- function(x, y) {
 # rnorm() , dnorm() . Make a case for the opposite. ANS: autocompletion, but I
 # think I've seen functions like rnorm before... so maybe it's a 'thing'. Yep -
 # there are other functions like rbinom... 
+
+### conditional execution #####################################################
+# 1. What’s the difference between if and ifelse() ? Carefully read the help
+# and construct three examples that illustrate the key differences. ANS:
+# they're very different... I'm not doing examples.
+
+ifelse(c(1,2,3,4)>2, "yeap", "nope") 
+
+# 2. Write a greeting function that says “good morning,” “good afternoon,” or
+# “good evening,” depending on the time of day. (Hint: use a time argument that
+# defaults to lubridate::now() . That
+
+greet <- function(time = lubridate::now()) {
+    hour = lubridate::hour(time)
+    if (hour < 12)  {
+        print("good morning")
+    } else if (hour < 18) {
+        print("good afternoon")
+    } else {
+        print("good evening")
+    }
+}
+
+# 3. Implement a fizzbuzz function. It takes a single number as input. If the
+# number is divisible by three, it returns “fizz”. If it’s divisible by five it
+# returns “buzz”. If it’s divisible by three and five, it returns “fizzbuzz”.
+# Otherwise, it returns the number. Make sure you first write working code
+# before you create the function.
+
+fizzbuzz <- function(x) {
+    fizz = ""
+    buzz = ""
+    if (x %% 3 == 0) {
+        fizz = "fizz"
+    }
+    if (x %% 5 == 0) {
+        buzz = "buzz"
+    }
+    if (fizz == "" && buzz == "" ) {
+        return(x)
+    } else {
+        print(paste0(fizz, buzz))
+    }
+}
+
+# 4. How could you use cut() to simplify this set of nested if-else statements?
+
+if (temp <= 0) {
+    "freezing"
+} else if (temp <= 10) {
+    "cold"
+} else if (temp <= 20) {
+    "cool"
+} else if (temp <= 30) {
+    "warm"
+} else {
+    "hot"
+}
+
+temp = 30
+cut(temp, breaks = c(  -Inf,       0,     10,      20,    30,  Inf),
+          labels = c("freezing", "cold", "cool", "warm", "hot"),
+          right = T)
+
+# How would you change the call to cut() if I’d used < instead of <= ? What is
+# the other chief advantage of cut() for this problem? (Hint: what happens if
+# you have many values in temp ?) ANS: right = FALSE, and it performs on each
+# element
+
+# 5. What happens if you use switch() with numeric values? ANS: it's used to
+# index the case to perform
+
+# 6. What does this switch() call do? What happens if x is “e”? 
+# ANS: once it matches, it runs down until it finds the first RHS (even
+# non-matching) and evaluates it.
+# ANS: nothing because not match and no default  (which I'll now add as "?", so
+# it would be returned)
+
+switch("e", "?",
+       a = ,
+       b = "ab",
+       c = ,
+       d = "cd"
+)
+
+# Experiment, then carefully read the documentation
