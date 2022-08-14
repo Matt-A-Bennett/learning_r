@@ -64,4 +64,4 @@ Science](https://r4ds.had.co.nz/index.html)
  
 #### Chapter 15: Functions
 - [x] when should you write a function?
-- [ ] functions are for humans and computers
+- [x] functions are for humans and computers

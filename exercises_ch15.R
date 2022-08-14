@@ -97,16 +97,17 @@ is_readable <- function(x) file.access(x, 4) == 0
 # 1. Read the source code for each of the following three functions, puzzle out
 # what they do, and then brainstorm better names:
 
-f1 <- function(string, prefix) {
+starts_with <- function(string, prefix) {
     substr(string, 1, nchar(prefix)) == prefix
 }
 
-f2 <- function(x) {
+
+remove_last <- function(x) {
     if (length(x) <= 1) return(NULL)
     x[-length(x)]
 }
 
-f3 <- function(x, y) {
+replicate <- function(x, y) {
     rep(y, length.out = length(x))
 }
 
@@ -114,7 +115,9 @@ f3 <- function(x, y) {
 # brainstorming a better name for it and its arguments.
 
 # 3. Compare and contrast rnorm() and MASS::mvrnorm() . How could you make them
-# more consistent?
+# more consistent? ANS: mean %<%> mu and sd %<>% Sigma
 
 # 4. Make a case for why norm_r() , norm_d() , etc., would be better than
-# rnorm() , dnorm() . Make a case for the opposite.
+# rnorm() , dnorm() . Make a case for the opposite. ANS: autocompletion, but I
+# think I've seen functions like rnorm before... so maybe it's a 'thing'. Yep -
+# there are other functions like rbinom... 
