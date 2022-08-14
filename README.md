@@ -67,3 +67,6 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] functions are for humans and computers
 - [x] conditional execution
 - [x] function arguments
+
+#### Chapter 16: Vectors
+- [ ] important types of atomic vectors
