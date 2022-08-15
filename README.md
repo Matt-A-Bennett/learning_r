@@ -72,3 +72,4 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] important types of atomic vectors
 - [x] using atomic vectors
 - [x] recursive vectors (lists)
+- [x] augmented vectors

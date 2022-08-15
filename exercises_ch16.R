@@ -105,3 +105,28 @@ str(df_list)
 
 df[[1]][1]
 df_list[[1]][1]
+
+### augmented vectors #########################################################
+# 1. What does hms::hms(3600) return? How does it print? What primitive type is
+# the augmented vector built on top of? What attributes does it use?
+x <- hms::hms(3600)
+x
+typeof(x)
+attributes(x)
+
+# 2. Try and make a tibble that has columns with different lengths. What
+# happens? ANS: error with tribble(), recycle length 1 vector in tibble(),
+# error with more than length 1.
+df <- tribble(~a, ~b, ~c,
+               1,  2,  3,
+               4,  5
+)
+
+df <- tibble(a = c(1,4), b = c(2, 5), c = 3)
+df <- tibble(a = c(1,4), b = c(2, 5), c = c(3, 3, 3))
+
+# 3. Based of the previous definition, is it OK to have a list as a column of a
+# tibble? ANS: yes
+df <- tribble(~a, ~b, ~c,
+               list(1),  list(2, 2),  list(3, "b", NA),
+)
