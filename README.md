@@ -71,3 +71,4 @@ Science](https://r4ds.had.co.nz/index.html)
 #### Chapter 16: Vectors
 - [x] important types of atomic vectors
 - [x] using atomic vectors
+- [x] recursive vectors (lists)

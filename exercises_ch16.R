@@ -82,3 +82,26 @@ x <- c("a" = 1, "b" = 2)
 x[3]
 x["c"]
 
+### recursive vectors (lists) #################################################
+# 1. Draw the following lists as nested sets:
+
+# a. list(a, b, list(c, d), list(e, f))
+
+# b. list(list(list(list(list(list(a))))))
+
+# 2. What happens if you subset a tibble as if you’re subsetting a list? What
+# are the key differences between a list and a tibble? ANS: they are the same,
+# except tibbles require the same length of every column
+
+df <- tribble(~a, ~b, ~c,
+               1,  2,  3,
+               4,  5,  6
+)
+
+df_list <- list(a = list(1,4), b = list(2, 5), c = list(3, 6))
+
+str(df)
+str(df_list)
+
+df[[1]][1]
+df_list[[1]][1]
