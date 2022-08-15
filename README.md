@@ -73,3 +73,7 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] using atomic vectors
 - [x] recursive vectors (lists)
 - [x] augmented vectors
+
+#### Chapter 17: Iteration with purrr
+- [x] for loops
+
