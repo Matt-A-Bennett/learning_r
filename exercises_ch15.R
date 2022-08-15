@@ -12,7 +12,7 @@ rescale01 <- function(x) {
     x <- (x - rng[1]) / (rng[2] - rng[1])
     x[x == Inf] <- 1
     x[x == -Inf] <- 0
-    return(x)
+    return (x)
 }
 
 x <- c(1:10, NA, Inf, -Inf)
@@ -45,9 +45,9 @@ x <- c(1:10, 10:5, NA)
 
 drop_na <- function(x, na.rm = TRUE) {
     if (na.rm) {
-        return(x[!is.na(x)])
+        return (x[!is.na(x)])
     }
-    return(x)
+    return (x)
 }
 
 myvar <- function(x, na.rm = FALSE) {
@@ -55,7 +55,7 @@ myvar <- function(x, na.rm = FALSE) {
     sq_diffs <- (x - mean(x)) ^ 2
     SS <- sum(sq_diffs)
     V <- SS/(length(x) - 1)
-    return(V)
+    return (V)
 }
 
 var(x, na.rm = T)
@@ -67,7 +67,7 @@ skew <- function(x, na.rm = FALSE) {
     cubes <- ((x - mean(x)) / sd) ^ 3
     sum_cubes <- sum(cubes)
     n = length(x)
-    return(sum_cubes /n)
+    return (sum_cubes /n)
 }
 skew(x, na.rm = T)
 
@@ -103,7 +103,7 @@ starts_with <- function(string, prefix) {
 
 
 remove_last <- function(x) {
-    if (length(x) <= 1) return(NULL)
+    if (length(x) <= 1) return (NULL)
     x[-length(x)]
 }
 
@@ -160,7 +160,7 @@ fizzbuzz <- function(x) {
         buzz = "buzz"
     }
     if (fizz == "" && buzz == "" ) {
-        return(x)
+        return (x)
     } else {
         print(paste0(fizz, buzz))
     }

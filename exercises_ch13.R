@@ -146,7 +146,7 @@ floor_date(today(), "year") + months(0:11)
 # you are in years.
 age <- function(birthday) {
     diff = (birthday %--% today()) / years(1)
-    return(diff)
+    return (diff)
 }
 
 birthday <- dmy("19-11-1989")
