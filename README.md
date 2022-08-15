@@ -70,4 +70,4 @@ Science](https://r4ds.had.co.nz/index.html)
 
 #### Chapter 16: Vectors
 - [x] important types of atomic vectors
-- [ ] using atomic vectors
+- [x] using atomic vectors
