@@ -146,3 +146,68 @@ for (i in 1:5) {
 # How does this affect performance? Design and execute an experiment. ANS: as
 # expected, preallocation is hundreds of times faster.
 
+### for loops variations ######################################################
+# 1. Imagine you have a directory full of CSV files that you want to read in.
+# You have their paths in a vector, 
+#files <- dir("data/", pattern = "\\.csv$", full.names = TRUE)
+# and now want to read each one with read_csv() . Write the for loop that will
+# load them into a single data frame.
+out <- vector("list", length(files))
+for (i in seq_along(files)) {
+    out[[i]] <- read_csv(i)
+}
+df <- bind_rows(out)
+
+# 2. What happens if you use for (nm in names(x)) and x has no names? What if
+# only some of the elements are named? What if the names are not unique?
+# ANS, NULL; "a", "b", ""; "a", "a", ""
+x <- c("a" = 1,"a" = 2, 3)
+for (nm in names(x)) {
+    print(nm)
+}
+
+# 3. Write a function that prints the mean of each numeric column in a data
+# frame, along with its name. For example, show_mean(iris) would print:
+
+print_col_means <- function(df) {
+    for (i in seq_along(df)) {
+        data <- df[[i]]
+        if (is.numeric(data)) {
+            name <- colnames(df)[[i]]
+            col_mean <- mean(data, na.rm = T)
+            formatted_col_mean <- format(round(col_mean, 2), nsmall = 2)
+            print(glue("{name}:\t{formatted_col_mean}"))
+        }
+    }
+}
+print_col_means(iris)
+print_col_means(mtcars)
+
+#> show_mean(iris)
+#> Sepal.Length: 5.84
+#> Sepal.Width:  3.06
+#> Petal.Length: 3.76
+#> Petal.Width:  1.20
+
+# (Extra challenge: what function did I use to make sure that the numbers lined
+# up nicely, even though the variable names had different lengths?)
+
+# 4. What does this code do? How does it work? ANS: named list, where names are
+# two of the df colnames. The values are functions. The first converst cubic
+# inches (in the displacement) into litres. The second turns the coluomn into a
+# factor and renames the levels from 1 to 'manual' and from 2 to 'auto'. Since
+# the function is named the same as a column the the function names can be used
+# to index the column, and apply the desired function to transform that column,
+# and inject it back into the original df, with the same name as before. Pretty
+# sneaky.
+
+
+trans <- list(
+              disp = function(x) x * 0.0163871,
+              am = function(x) {
+                  factor(x, labels = c("auto", "manual"))
+              }
+)
+for (var in names(trans)) {
+    mtcars[[var]] <- trans[[var]](mtcars[[var]])
+}
