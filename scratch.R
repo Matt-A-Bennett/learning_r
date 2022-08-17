@@ -1,5 +1,6 @@
 library(tidyverse)
 library(lubridate)
+library(modelr)
 library(nycflights13)
 library(Lahman)
 library(ggdark)

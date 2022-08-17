@@ -81,3 +81,7 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] the map functions
 - [x] other patterns of loops
 
+#### Chapter 18: Model basics with modelr
+- [x] a simple model
+- [ ] visualising models
+
