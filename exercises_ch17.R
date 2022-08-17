@@ -211,3 +211,118 @@ trans <- list(
 for (var in names(trans)) {
     mtcars[[var]] <- trans[[var]](mtcars[[var]])
 }
+
+### for loops vs functionals ##################################################
+# 1. Read the documentation for apply() . In the second case, what two for
+# loops does it generalize?
+X <- matrix(rnorm(6), nrow=3)
+out <- vector("double", nrow(X))
+for (row in seq_len(nrow(X))) {
+    out[[row]] <- mean(X[row,])
+}
+
+out <- vector("double", ncol(X))
+for (col in seq_len(ncol(X))) {
+    out[[col]] <- mean(X[col,])
+}
+
+# 2. Adapt col_summary() so that it only applies to numeric columns. You might
+# want to start with an is_numeric() function that returns a logical vector
+# that has a TRUE corresponding to each numeric column.
+
+col_summary <- function(df, fun) {
+    numerics <- sapply(df, is.numeric)
+    df <- df[numerics]
+    out <- vector("double", length(df))
+    for (i in seq_along(df)) {
+        out[i] <- fun(df[[i]])
+    }
+    out
+}
+col_summary(iris, mean)
+
+### the map functions #########################################################
+# 1. Write code that uses one of the map functions to:
+
+# a. Compute the mean of every column in mtcars .
+map_dbl(mtcars, mean)
+
+# b. Determine the type flights13::flights .
+map_chr(flights, typeof)
+
+# c. Compute the number of unique values in each column of iris .
+map_int(iris, n_distinct)
+map_int(iris, ~length(unique(.)))
+
+# d. Generate 10 random normals for each of μ = –10, 0, 10, and 100.
+map(c(-10, 0, 10, 100), ~rnorm(10, mean = .))
+
+# 2. How can you create a single vector that for each column in a data frame
+# indicates whether or not it’s a factor?
+map_lgl(iris, is.factor)
+
+# 3. What happens when you use the map functions on vectors that aren’t lists?
+# What does map(1:5, runif) do? Why? ANS: no surprise
+
+# 4. What does the following code do and why?
+map(-2:2, rnorm, n = 5) # ANS: n = number of samples, so the . becomes the mean
+# arg.
+map_dbl(-2:2, rnorm, n = 5) # ANS: error because the output is a whole vector,
+# each of which must be stored in a list, not as an element of a dbl vector
+
+# 5. Rewrite map(x, function(df) lm(mpg ~ wt, data = df)) to eliminate the
+# anonymous function.
+map(x, function(df) lm(mpg ~ wt, data = df))
+map(x, ~lm(mpg ~ wt, data = .))
+
+### other patterns of loops ###################################################
+# 1. Implement your own version of every() using a for loop. Compare it with
+# purrr::every() . What does purrr’s version do that your version doesn’t? 
+# ANS: returns NA if any of the values in x are NA
+
+my_every <- function(x, f, ...) {
+    for (i in x) {
+        if (!f(i, ...)) {
+            return (FALSE)
+        }
+        return (TRUE)
+    }
+}
+x <- list(1:26, letters, list(1:26))
+my_every(x, is_vector)
+my_every(x, is_vector, n = 26)
+my_every(x, is_vector, n = 10)
+my_every(x, is_double)
+
+# 2. Create an enhanced col_sum() that applies a summary function to every
+# numeric column in a data frame.
+col_sum <- function(df, fun, ...) {
+    map(keep(df, is.numeric), fun, ...)
+}
+col_sum(iris, mean)
+
+# 3. A possible base R equivalent of col_sum() is:
+
+col_sum3 <- function(df, f) {
+    is_num <- sapply(df, is.numeric)
+    df_num <- df[, is_num]
+    sapply(df_num, f)
+}
+
+# But it has a number of bugs as illustrated with the following inputs:
+
+df <- tibble(
+             x = 1:3,
+             y = 3:1,
+             z = c("a", "b", "c")
+)
+
+# OK
+col_sum3(df, mean)
+# Has problems: don't always return numeric vector
+col_sum3(df[1:2], mean)
+col_sum3(df[1], mean)
+col_sum3(df[0], mean)
+
+# What causes the bugs? ANS sapply tries to help, but is annoying and
+# inconsistent

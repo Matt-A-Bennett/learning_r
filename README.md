@@ -77,4 +77,7 @@ Science](https://r4ds.had.co.nz/index.html)
 #### Chapter 17: Iteration with purrr
 - [x] for loops
 - [x] for loop variations
+- [x] for loops vs functionals
+- [x] the map functions
+- [x] other patterns of loops
 

@@ -1,6 +1,4 @@
 library(tidyverse)
-library(stringr)
-library(forcats)
 library(lubridate)
 library(nycflights13)
 library(Lahman)
