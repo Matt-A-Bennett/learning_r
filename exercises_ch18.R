@@ -85,3 +85,59 @@ ggplot(sim1a, aes(x)) +
 # data (which is good) but could obscure individual points (which is bad)
 
 ### formulas and model families ###############################################
+# 1. What happens if you repeat the analysis of sim2 using a model without an
+# intercept? What happens to the model equation? What happens to the
+# predictions? ANS: no difference because the intercept in a categorical model
+# is the grand mean of the data and is estimated implicitly
+
+# 2. Use model_matrix() to explore the equations generated for the models I fit
+# to sim3 and sim4 . Why is * a good shorthand for interaction? ANS: because
+# the columns representing the interaction terms are litterally formed by
+# multiplying the 'main effect' columns
+
+# 3. Using the basic principles, convert the formulas in the following two
+# models into functions. (Hint: start by converting the categorical variable
+# into 0-1 variables.) 
+mod1 <- lm(y ~ x1 + x2, data = sim3)
+mod2 <- lm(y ~ x1 * x2, data = sim3)
+
+model_matrix(sim3, y ~ x1 * x2)
+
+
+additive_mod_matrix <- function(data) {
+    code <- keep(data, map_lgl(data, is.factor))
+    levels <- unique(code)
+    dm <- matrix(nrow = nrow(data), ncol = nrow(levels)-1+2)
+    dm[,1] <- rep(1, nrow(data))
+    dm[,2] <- data$x1
+    for (i in seq_along(levels[[1]][2:4]) ) {
+        dm[,i+2] <- as.numeric(levels[[1]][i] == code[[1]])
+    }        
+    dm <- as_tibble(dm)
+    dm <- setNames(dm, c("(Intercept)", "x1", "x2b", "x2c", "x2d"))
+    return (dm)
+}
+
+interactive_mod_matrix <- function(data) {
+    dm <- additive_mod_matrix(data)
+    dm$`x1:x2b` <- dm$x1 * dm$x2b
+    dm$`x1:x2c` <- dm$x1 * dm$x2c
+    dm$`x1:x2d` <- dm$x1 * dm$x2d
+    return (dm)
+}
+
+additive_mod_matrix(sim3)
+interactive_mod_matrix(sim3)
+
+# 4. For sim4 , which of mod1 and mod2 is better? I think mod2 does a slightly
+# better job at removing patterns, but it’s pretty subtle. Can you come up with
+# a plot to support my claim?
+
+mod1 <- lm(y ~ x1 + x2, data = sim4)
+mod2 <- lm(y ~ x1 * x2, data = sim4)
+
+resid <- gather_residuals(sim4, mod1, mod2)
+
+ggplot(resid, aes(abs(resid), color = model)) +
+    geom_freqpoly(binwidth = 0.5)
+
