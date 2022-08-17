@@ -83,5 +83,6 @@ Science](https://r4ds.had.co.nz/index.html)
 
 #### Chapter 18: Model basics with modelr
 - [x] a simple model
-- [ ] visualising models
+- [x] visualising models
+- [ ] formulas and model families
 

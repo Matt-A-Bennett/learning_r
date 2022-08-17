@@ -50,3 +50,38 @@ model1 <- function(a, data) {
 }
 
 ### visualising models ########################################################
+# 1. Instead of using lm() to fit a straight line, you can use loess() to fit a
+# smooth curve. Repeat the process of model fitting, grid generation,
+# predictions, and visualization on sim1 using loess() instead of lm() . How
+# does the result compare to geom_smooth() ? ANS: I bet it's the same (friston
+# face)
+
+lmod <- loess(y ~ x, data = sim1a)
+
+grid <- data_grid(sim1a, x)
+
+grid <- grid %>% 
+    gather_predictions(mod, lmod,)
+
+ggplot(sim1a, aes(x)) +
+    geom_point(aes(y = y)) +
+    geom_line(aes(y = pred, color = model), data = grid) +
+    geom_smooth(aes(y = y), color = "blue", se = F)
+
+
+# 2. add_predictions() is paired with gather_predictions() and
+# spread_predictions() . How do these three functions differ?
+# ANS: spread_predictions() adds predictions *to* multiple models,
+# gather_predictions() adds predictions *from* multiple models (see code above)
+
+# 3. What does geom_ref_line() do? What package does it come from? Why is
+# displaying a reference line in plots showing residuals useful and important?
+# ANS: adds a horizontal OR a vertical line. It's important because you want to
+# assess if the points are evenly distributed about the zero point (no skewed)
+
+# 4. Why might you want to look at a frequency polygon of absolute residuals?
+# What are the pros and cons compared to looking at the raw residuals? ANS: You
+# want to see if they're normally distributed. frequency polygons summarise the
+# data (which is good) but could obscure individual points (which is bad)
+
+### formulas and model families ###############################################
