@@ -85,5 +85,8 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] a simple model
 - [x] visualising models
 - [x] formulas and model families
+
+#### Chapter 19: Model building
 - [x] why are low quality diamonds more expensive?
+- [ ] what affects the number of daily flights?
 

@@ -202,3 +202,36 @@ diamonds2
 # diamond? ANS: yes, the lprice ~ lcarat + color + cut + clarity is ok,
 # especially if I was buying in bulk
 
+### what affects the number of daily flights? #################################
+# 1. Use your Google sleuthing skills to brainstorm why there were fewer than
+# expected flights on January 20, May 26, and Septem‐ ber 1. (Hint: they all
+# have the same explanation.) How would these days generalize to another year?
+
+# 2. What do the three days with high positive residuals represent? How would
+# these days generalize to another year?
+
+# 3. Create a new variable that splits the wday variable into terms, but only
+# for Saturdays, i.e., it should have Thurs , Fri , but Sat- summer ,
+# Sat-spring , Sat-fall . How does this model compare with the model with every
+# combination of wday and term ?
+
+# 4. Create a new wday variable that combines the day of week, term (for
+# Saturdays), and public holidays. What do the residuals of that model look
+# like?
+
+# 5. What happens if you fit a day-of-week effect that varies by month (i.e., n
+# ~ wday * month )? Why is this not very helpful?
+
+# 6. What would you expect the model n ~ wday + ns(date, 5) to look like?
+# Knowing what you know about the data, why would you expect it to be not
+# particularly effective?
+
+# 7. We hypothesized that people leaving on Sundays are more likely to be
+# business travelers who need to be somewhere on Monday. Explore that
+# hypothesis by seeing how it breaks down based on distance and time: if it’s
+# true, you’d expect to see more Sunday evening flights to places that are far
+# away.
+
+# 8. It’s a little frustrating that Sunday and Saturday are on separate ends of
+# the plot. Write a small function to set the levels of the factor so that the
+# week starts on Monday.
