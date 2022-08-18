@@ -141,3 +141,64 @@ resid <- gather_residuals(sim4, mod1, mod2)
 ggplot(resid, aes(abs(resid), color = model)) +
     geom_freqpoly(binwidth = 0.5)
 
+### why are low quality diamonds more expensive? ##############################
+# 1. In the plot of lcarat versus lprice , there are some bright vertical
+# strips. What do they represent? 
+# ANS: 0.3, 0.4, 0.5, 0.7, 0.9, 1, 1.5, 2 (nice human fractions)
+
+# 2. If log(price) = a_0 + a_1 * log(carat) , what does that say about the
+# relationship between price and carat ? ANS: it's an exponetial relationship
+
+# 3. Extract the diamonds that have very high and very low residuals. Is there
+# anything unusual about these diamonds? Are they particularly bad or good, or
+# do you think these are pricing errors?
+diamonds2 <- diamonds %>%
+    filter(carat < 2.5) %>%
+    mutate(lprice = log2(price), lcarat = log2(carat))
+
+mod <- lm(lprice ~ lcarat, data = diamonds2)
+
+grid <- diamonds2 %>%
+    data_grid(carat = seq_range(carat, 20)) %>%
+    mutate(lcarat = log2(carat)) %>%
+    add_predictions(mod, "lprice") %>%
+    mutate(price = 2 ^ lprice)
+
+ggplot(diamonds2, aes(carat, price)) +
+    geom_hex(bins = 50) +
+    geom_line(data = grid, color = "red", size = 1)
+
+diamonds2 <- diamonds2 %>% add_residuals(mod, var = "lresid")
+
+diamonds2 <- diamonds2 %>%
+    add_predictions(mod, "pred_lprice") %>%
+    mutate("pred_price" = 2 ^ pred_lprice)
+
+diamonds2 %>%
+    arrange(desc(lresid))
+
+ggplot(diamonds2, aes(lresid, price, color = clarity)) +
+    geom_point(alpha = 0.2)
+
+# sytmatic under/over estimate grouped by clarity and color
+
+mod_diamond2 <- lm(
+                   lprice ~ lcarat + color + cut + clarity,
+                   data = diamonds2
+)
+
+diamonds2 <- diamonds2 %>% add_residuals(mod_diamond2, var = "lresid_lin")
+
+ggplot(diamonds2, aes(lresid, price, color = clarity)) +
+    geom_point(alpha = 0.2)
+
+ggplot(diamonds2, aes(lresid_lin, color = clarity)) +
+    geom_freqpoly(binwidth = 0.05)
+
+diamonds2
+
+# 4. Does the final model, mod_diamonds2 , do a good job of predicting diamond
+# prices? Would you trust it to tell you how much to spend if you were buying a
+# diamond? ANS: yes, the lprice ~ lcarat + color + cut + clarity is ok,
+# especially if I was buying in bulk
+

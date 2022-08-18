@@ -85,4 +85,5 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] a simple model
 - [x] visualising models
 - [x] formulas and model families
+- [x] why are low quality diamonds more expensive?
 
