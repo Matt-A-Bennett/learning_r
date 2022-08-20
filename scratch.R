@@ -5,6 +5,8 @@ library(nycflights13)
 library(Lahman)
 library(ggdark)
 library(glue)
+library(MASS)
+library(splines)
 source("../functions.R")
 options(width = 158)
 
