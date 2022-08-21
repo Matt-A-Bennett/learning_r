@@ -91,5 +91,7 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] what affects the number of daily flights?
 
 #### Chapter 20: Many models with purrr and broom
-- [ ] gapminder
+- [x] gapminder
+- [x] creating list-columns
+- [x] simplifying list-columns
 
