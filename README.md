@@ -96,5 +96,9 @@ Science](https://r4ds.had.co.nz/index.html)
 - [x] simplifying list-columns
 
 #### Chapter 21: Rmarkdown
-- [ ] code chunks
+- [x] code chunks
 
+#### Chapter 22: Graphics for communication
+- [x] label
+- [x] annotations
+- [x] scales

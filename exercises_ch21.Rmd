@@ -1,16 +1,74 @@
-#### code chunks
-1. Add a section that explores how diamond sizes vary by cut, colour, and
-   clarity. Assume you’re writing a report for someone who doesn’t know R, and
-   instead of setting echo = FALSE on each chunk, set a global option.
+```{r}
+knitr::opts_chunk$set(
+echo = FALSE
+)
+```
 
-2. Download diamond-sizes.Rmd from
+## code chunks
+
+**1. Add a section that explores how diamond sizes vary by cut, colour, and
+   clarity. Assume you’re writing a report for someone who doesn’t know R, and
+   instead of setting echo = FALSE on each chunk, set a global option.**
+
+```{r diamonds}
+cut_numbers <- diamonds %>%
+    filter(cut == "Fair") %>%
+    group_by(cut) %>%
+    count()
+```
+There are `r cut_numbers$n` Fair diamonds.
+
+**2. Download diamond-sizes.Rmd from
    https://github.com/hadley/r4ds/tree/master/rmarkdown. Add a section that
    describes the largest 20 diamonds, including a table that displays their
-   most important attributes.
+   most important attributes.**
 
-3. Modify diamonds-sizes.Rmd to use comma() to produce nicely formatted output.
-   Also include the percentage of diamonds that are larger than 2.5 carats.
+```{r largest 20 diamonds}
+largest_20 <- diamonds %>%
+    arrange(desc(z)) %>%
+    head(20) %>%
+    dplyr::select(-c(x, y))
+```
 
-4. Set up a network of chunks where d depends on c and b, and both b and c
+```{r summar table}
+largest_20 %>%
+    summary() %>%
+    head(6) %>%
+    knitr::kable(caption = "summary statistics for 20 largest diamonds")
+```
+
+**3. Modify diamonds-sizes.Rmd to use comma() to produce nicely formatted
+   output. Also include the percentage of diamonds that are larger than 2.5
+   carats.**
+
+```{r comma function}
+comma <- function(x) {
+    format(x, digits = 2, big.mark = ",")
+}
+```
+
+There are ***not*** `r comma(cut_numbers$n*135)` Fair diamonds!
+
+**4. Set up a network of chunks where d depends on c and b, and both b and c
    depend on a. Have each chunk print lubridate::now(), set cache = TRUE, then
-   verify your understanding of caching.
+   verify your understanding of caching.**
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+```{r a}
+lubridate::now()
+```
+
+```{r b, cached = TRUE, dependson = "a"}
+lubridate::now()
+```
+
+```{r c, cached = TRUE, dependson = c("a", "b")}
+lubridate::now()
+```
+
+```{r d, cached = TRUE, dependson = "c"}
+lubridate::now()
+```

@@ -1,0 +1,221 @@
+```{r echo = FALSE}
+knitr::opts_chunk$set(
+echo = FALSE,
+message = FALSE,
+warning = FALSE
+)
+```
+
+## label
+**1. Create one plot on the fuel economy data with customized title , subtitle ,
+   caption , x , y , and colour labels.**
+
+```{r fuel_plot}
+mpg %>%
+    ggplot(aes(displ, cty)) +
+    geom_point(aes(color = class)) +
+    geom_smooth(aes(color = class), se = FALSE) +
+    geom_smooth(color = "black") +
+    labs(title = "Look at that curve",
+    subtitle = "With the standard error and everything!",
+    caption = "Made by a data scientist",
+    x = "Engine Displacement (l)",
+    y = "City miles per gallon",
+    color = "Vehicle class")
+```
+
+**2. The geom_smooth() is somewhat misleading because the hwy for large engines
+   is skewed upwards due to the inclusion of light‐weight sports cars with big
+   engines. Use your modeling tools to fit and display a better model.**
+
+```{r fuel_mod}
+mod <- lm(hwy ~ displ * class, data = mpg)
+av_mod <- MASS::rlm(hwy ~ poly(displ,2), data = mpg)
+
+mpg <- mpg %>% 
+    gather_residuals(interaction = mod, rls = av_mod) %>%
+    gather_predictions(interaction = mod, rls = av_mod)
+```
+
+```{r fuel_mod_plot}
+mpg %>%
+    ggplot(aes(displ, hwy)) +
+    geom_point(aes(color = class)) +
+    geom_line(data = filter(mpg, model == "interaction"),
+              aes(y = pred, color = class)) +
+    geom_line(data = filter(mpg, model == "rls"),
+              aes(y = pred), size = 1.5, color = "black", alpha = 0.2) +
+    labs(title = "Look at that curve",
+    subtitle = "With the standard error and everything!",
+    caption = "Made by a data scientist",
+    x = "Engine Displacement (l)",
+    y = "Highway miles per gallon",
+    color = "Vehicle class")
+```
+
+**3. Take an exploratory graphic that you’ve created in the last month, and add
+   informative titles to make it easier for others to understand.**
+
+## annotations
+**1. Use geom_text() with infinite positions to place text at the four corners of
+   the plot.**
+
+```{r fuel_mod_plot_annot}
+mpg %>%
+    ggplot(aes(displ, hwy)) +
+    geom_point(aes(color = class)) +
+    geom_line(data = filter(mpg, model == "interaction"),
+              aes(y = pred, color = class)) +
+    geom_line(data = filter(mpg, model == "rls"),
+              aes(y = pred), size = 1.5, color = "black", alpha = 0.2) +
+    labs(title = "Look at that curve",
+    subtitle = "With the standard error and everything!",
+    caption = "Made by a data scientist",
+    x = "Engine Displacement (l)",
+    y = "Highway miles per gallon",
+    color = "Vehicle class") +
+    geom_text(aes(Inf, Inf, label = "TEST"),
+              hjust = "right", vjust = "top")
+```
+
+**2. Read the documentation for annotate() . How can you use it to add a text
+   label to a plot without having to create a tibble? _ANS: just pass them in
+   as stand along vector objects._**
+
+**3. How do labels with geom_text() interact with faceting? How can you add a
+   label to a single facet? How can you put a different label in each facet?
+   (Hint: think about the underlying data.)**
+
+```{r label}
+label <- tibble(displ = Inf,
+                hwy = Inf,
+                class = unique(mpg$class),
+                label = str_c("Put me on\n", class))
+```
+
+```{r fuel_mod_plot_annot_facet}
+mpg %>%
+    ggplot(aes(displ, hwy)) +
+    geom_point(aes(color = class)) +
+    geom_line(data = filter(mpg, model == "interaction"),
+              aes(y = pred, color = class)) +
+    geom_line(data = filter(mpg, model == "rls"),
+              aes(y = pred), size = 1.5, color = "black", alpha = 0.2) +
+    labs(title = "Look at that curve",
+    subtitle = "With the standard error and everything!",
+    caption = "Made by a data scientist",
+    x = "Engine Displacement (l)",
+    y = "Highway miles per gallon",
+    color = "Vehicle class") +
+    geom_text(aes(label = label), data = label,
+              hjust = "right", vjust = "top") +
+    facet_wrap(~ class)
+```
+
+**4. What arguments to geom_label() control the appearance of the background
+   box? _ANS: label.padding, label.r, label.size, 'fill' aesthetics_**
+
+**5. What are the four arguments to arrow() ? How do they work? Create a series
+   of plots that demonstrate the most important options.**
+
+
+```{r arrow_params}
+arrow_params <- tibble(arrows = c(
+                       ))
+```
+
+```{r plot_arrows}
+ggplot() +
+    geom_segment(aes(x = 0.1, y = 0, xend = 0.1, yend = 1),
+                 arrow = arrow(angle = 0,
+                               length = unit(0.2, "cm"),
+                               ends = "last", type = "open")) +
+    geom_segment(aes(x = 0.5, y = 0, xend = 0.5, yend = 1),
+                 arrow = arrow(angle = 45,
+                               length = unit(0.4, "cm"),
+                               ends = "first", type = "closed")) +
+    geom_segment(aes(x = 1, y = 0, xend = 1, yend = 1),
+                 arrow = arrow(angle = 90,
+                               length = unit(0.6, "cm"),
+                               ends = "both", type = "open"))
+```
+
+## scales
+**1. Why doesn’t the following code override the default scale? _ANS: the
+'fill' variable wasn't provided_**
+
+```{r}
+ggplot(df, aes(x, y)) +
+    geom_hex() +
+    scale_color_gradient(low = "white", high = "red") +
+    coord_fixed()
+```
+
+**2. What is the first argument to every scale? How does it compare to labs() ? 
+   _ANS: `name` (same as the labs() functions.**
+
+**3. Change the display of the presidential terms by:**
+
+```{r}
+presidential %>%
+    mutate(id = 33 + row_number()) %>%
+    ggplot(aes(start, id, color = party)) +
+    geom_point() +
+    geom_segment(aes(xend = end, yend = id)) +
+    scale_colour_manual(
+                        values = c(Republican = "pink", Democratic = "green")
+    )
+```
+
+**a. Combining the two variants shown above.**
+
+**b. Improving the display of the y-axis. _ANS: Done_**
+
+**c. Labeling each term with the name of the president. _ANS: Done_**
+
+**d. Adding informative plot labels._ANS: Done_**
+
+**e. Placing breaks every four years (this is trickier than it seems!)._ANS:
+   Done_**
+
+
+```{r}
+num_to_str_lab <- function(x) {
+    suffix <- "th"
+    last <- str_sub(x, -1, -1)
+    if (last == "1") {
+    suffix <- "st" 
+    } else if (last == "2") {
+    suffix <- "nd"
+    } else if (last == "3") {
+    suffix <- "rd"
+    }
+    return (map(x, ~paste0(., suffix)))
+}
+```
+
+```{r}
+term_starts <- seq(1952, 2020, by = 4)
+presidential %>%
+    mutate(id = 33 + row_number()) %>%
+    ggplot(aes(start, id, color = party)) +
+    geom_point() +
+    geom_segment(aes(xend = end, yend = id)) +
+    scale_colour_manual(values = c(Republican = "pink", Democratic = "green")) +
+    scale_x_date(labels = str_c(term_starts), 
+                 breaks = as_date(ISOdate(term_starts, 1, 1))) +
+    scale_y_continuous(labels = map(seq(30, 50, by = 1), num_to_str_lab), 
+                       breaks = seq(30, 50, by = 1)) +
+    labs(x = "Starting year and term span", y = "Nth President") +
+    geom_text(aes(label = name), nudge_y = 0.3)
+```
+as_date(ISOdate(seq(1960, 2020, by = 4), 1, 1))
+
+**4. Use override.aes to make the legend on the following plot easier to see:**
+
+```{r}
+ggplot(diamonds, aes(carat, price)) +
+    geom_point(aes(color = cut), alpha = 1/20) +
+    guides(color = guide_legend(override.aes = list(alpha = 1)))
+
+```
