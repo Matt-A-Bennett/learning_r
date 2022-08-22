@@ -35,3 +35,85 @@ lobstr::obj_addr(match.fun("mean"))
 
 ### copy-on-modify ############################################################
 
+# 1. Why is tracemem(1:10) not useful?
+tracemem(1:10) # the values don't have a name and so you don't get to trace
+               # changes to that object
+
+# 2. Explain why tracemem() shows two copies when you run this code. Hint:
+# carefully look at the difference between this code and the code shown earlier
+# in the section.
+
+x <- c(1L, 2L, 3L)
+tracemem(x)
+
+x[[3]] <- 4 # this is not an integer, thus we need to change to double which
+            # takes more space therefore we are modifying the whole vector
+            # (adding an integer/char to a vector of doubles doesn't need more)
+
+# 3. Sketch out the relationship between the following objects:
+
+a <- 1:10               # a points to vector object
+b <- list(a, a)         # b points to list, each element points to same vector
+c <- list(b, a, 1:10)   # c points to list, 1st el points to same list as b,
+                        # 2nd el points to that same vector again, 3rd el
+                        # points to new vector
+
+# 4. What happens when you run this code? ANS: in '<- x', the 'x' is the
+# original object (pointing to the vector), so the 2nd el of the list points to
+# this original pointer (which itself points to the vector)
+
+x <- list(1:10)
+x[[2]] <- x
+
+Draw a picture.
+
+      (1:10)
+       ^  ^
+x > [  | ] |
+           |
+       ----,
+      |
+x > [ | ; |] <--
+          |    |
+          -----
+
+### object size ###############################################################
+# 1. In the following example, why are object.size(y) and obj_size(y) so
+# radically different? Consult the documentation of object.size().
+
+y <- rep(list(runif(1e4)), 100) # 100 pointers to the same object
+
+object.size(y) # overestimtes by ~100 because doesn't take into account sharing
+#> 8005648 bytes
+obj_size(y)    # accurate - does take into account sharing
+#> 80,896 B
+
+# 2. Take the following list. Why is its size somewhat misleading?
+
+funs <- list(mean, sd, var)
+obj_size(funs)
+#> 17,608 B
+
+obj_size(mean)  #  1.13 kB
+obj_size(sd)    #  4.48 kB
+obj_size(var)   # 12.47 kB
+
+# 3. Predict the output of the following code:
+
+a <- runif(1e6)
+obj_size(a) # 8 bytes per val * 1e6 = 8'000'000 B + 48 B for list
+
+b <- list(a, a)
+obj_size(b)      # 8 MB + 48 B + 2 * 8 B = 8'000'112 B
+obj_size(a, b)   # 8 MB + 48 B + 3 * 8 B = 8'000'120 B (a is shared, 2
+                 # pointers, one to a list with two pointers)
+
+str(b)
+b[[1]][[1]] <- 10 # change the 1st vector el of the 1st list el
+obj_size(b)       # 16 MB
+obj_size(a, b)    # 16 MB ('a' still exists, so only need to point)
+
+b[[2]][[1]] <- 10 # change the 1st vector el of the 2nd list el
+obj_size(b)       # 16 MB (we have 2 distinct vectors)
+obj_size(a, b)    # 16 MB + 8 MB ('a' distinct from the 2 pointed to by 'b')
+
