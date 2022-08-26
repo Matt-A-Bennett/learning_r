@@ -6,3 +6,6 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] binding basics
 - [x] copy-on-modify
 - [x] object size
+
+#### Chapter 3: Vectors
+- [x] atomic vectors
