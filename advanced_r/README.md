@@ -9,3 +9,4 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 
 #### Chapter 3: Vectors
 - [x] atomic vectors
+- [x] attributes
