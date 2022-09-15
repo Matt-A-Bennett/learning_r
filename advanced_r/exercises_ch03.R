@@ -53,3 +53,46 @@ structure(1:5, i_am_not_a_comment = "my attribute")
 # But when you print that object you don’t see the comment attribute. Why?
 # Is the attribute missing, or is there something else special about it? (Hint:
 # try using help.)
+
+### S3 atomic vectors #########################################################
+# What sort of object does table() return? What is its type? What attributes
+# does it have? How does the dimensionality change as you tabulate more
+# variables? ANS: an integer vector, with attr being a list of lists dimnames
+# (the unique inputs, as characters). The number of dimensions is the number of
+# unique inputs per arg.
+
+str(table(c(1.2, 3, 3, 4)))
+str(table(c("a", "b", "c")))
+dim(table(c("a", "b", "c")))
+str(table(c("a", "b", "c"), c(1:3)))
+dim(table(c("a", "b", "c"), c(1:3)))
+str(table(c("a", "b", "c"), c(1:3), c(T, T, F)))
+dim(table(c("a", "b", "c"), c(1:3), c(T, T, F)))
+
+table(c(1:3,3), c(1:3,1))
+
+# What happens to a factor when you modify its levels? ANS: the levels
+# attribute is changed, but the underlying integer vector is the same.
+
+f1 <- factor(letters)
+structure(f1)
+attr(f1, 'levels')
+as.integer(f1)
+
+levels(f1) <- rev(levels(f1))
+
+# What does this code do? How do f2 and f3 differ from f1? ANS: Since the
+# levels are mismatched respective to the elements, the as.integer() must be
+# reversed 
+
+f2 <- rev(factor(letters)) # f2 is really reversing the as.integer
+structure(f2)
+attr(f2, 'levels')
+as.integer(f2)
+
+f3 <- factor(letters, levels = rev(letters)) # f3 is reversing the levels
+structure(f3)
+attr(f3, 'levels')
+as.integer(f3)
+
+### lists #####################################################################
