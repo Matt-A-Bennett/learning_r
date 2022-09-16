@@ -13,9 +13,9 @@ mode <- function(x){
 }
 
 str_showmatches <- function(str, pattern) {
-    positions <- str_locate_all(str, pattern)
-    match_display <- strrep(" ", str_length(str))
-    overline <- strrep("_", str_length(str))
+    positions <- stringi::stri_locate_all_regex(str, pattern)
+    match_display <- strrep(" ", nchar(str))
+    overline <- strrep("_", nchar(str))
     n_matches <- length(positions[[1]])/2
     if (n_matches > 0) {
         for (i in seq(n_matches)) {
