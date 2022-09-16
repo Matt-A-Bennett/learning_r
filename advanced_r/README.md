@@ -11,4 +11,5 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] atomic vectors
 - [x] attributes
 - [x] S3 atomic vectors
-- [ ] lists
+- [x] lists
+- [x] data frames and tibbles

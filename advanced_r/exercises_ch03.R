@@ -96,3 +96,56 @@ attr(f3, 'levels')
 as.integer(f3)
 
 ### lists #####################################################################
+# 1. List all the ways that a list differs from an atomic vector.
+# ANS: types can differ, can include a list as an element. Actually contains
+# pointers to the objects.
+
+# 2. Why do you need to use unlist() to convert a list to an atomic vector? Why
+# doesn’t as.vector() work? ANS: seems to work, maybe an update...?
+
+# 3. Compare and contrast c() and unlist() when combining a date and date-time
+# into a single vector.
+c(Sys.Date(), Sys.time())
+unlist(list(Sys.Date(), Sys.time()))
+unlist(c(Sys.Date(), Sys.time()))
+
+### data frames and tibbles ###################################################
+# 1. Can you have a data frame with zero rows? What about zero columns?
+df <- data.frame() # yep
+     
+# 2. What happens if you attempt to set rownames that are not unique? ANS: err
+df <- data.frame(x = 1:3, y = letters[1:3], row.names = c("A", "B", "B"))
+df <- data.frame(x = 1:3, y = letters[1:3], row.names = c("A", "B", "B"))
+     
+# 3. If df is a data frame, what can you say about t(df), and t(t(df))? Perform
+# some experiments, making sure to try different column types.
+df <- data.frame(x = c(T,T,F), y = c(F, T, F), row.names = c("A", "B", "C"))
+t(t(df)) # all fine
+is.matrix(t(t(df))) # TRUE
+
+df <- data.frame(x = 1:3, y = 1:3, row.names = c("A", "B", "C"))
+t(t(df)) # all fine
+is.matrix(t(t(df))) # TRUE
+
+df <- data.frame(x = 1:3, y = letters[1:3], row.names = c("A", "B", "C"))
+t(t(df)) # coreced to characters
+is.matrix(t(t(df))) # TRUE
+
+df <- data.frame(x = c(T,T,F), y = 1:3, row.names = c("A", "B", "C"))
+t(t(df)) # coerced to integers
+is.matrix(t(t(df))) # TRUE
+
+df <- data.frame(x = c(T,T,F), y = 1:3, z = letters[1:3], row.names = c("A", "B", "C"))
+t(t(df)) # all coreced to characters
+is.matrix(t(t(df))) # TRUE
+
+# 4. What does as.matrix() do when applied to a data frame with columns of
+# different types? How does it differ from data.matrix()?
+
+# coreces if there is a mix of types (using normal corecion hierarchy), chars
+# being the highest.
+str(as.matrix(data.frame(x = c(T,T,F), y = 1:3, z = letters[1:3], row.names = c("A", "B", "C"))))
+
+# coreces all variables to numeric, then uses each as col of matrix
+str(data.matrix(data.frame(x = c(T,T,F), y = 1:3, z = letters[1:3], row.names = c("A", "B", "C"))))
+
