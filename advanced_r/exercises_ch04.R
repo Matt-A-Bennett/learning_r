@@ -43,3 +43,24 @@ df <- data.frame(x = 1:3, y = letters[1:3], z = c(NA, NA, 1))
 # is used to subset the data frame, setting the values to zero
 
 ### selecting a single element ################################################
+# 1. Brainstorm as many ways as possible to extract the third value from the
+# cyl variable in the mtcars dataset. ANS: there are so many more too...
+mtcars[3, 2]     # matrix subset
+mtcars[2][3,]    # grab 2nd col as df with 1 col, and subset 3rd row
+mtcars[[2]][3]   # grab 2nd col as vector, and subset 3rd element
+mtcars[[2]][[3]] # same as above, using [[ ]] 
+mtcars$cyl[3]    # same as above, using $ shorthand for first [[ ]] 
+mtcars$cyl[[3]]  # same as above, using $ shorthand for first [[ ]] and  [[ ]]
+
+# 2. Given a linear model, e.g., mod <- lm(mpg ~ wt, data = mtcars), extract
+# the residual degrees of freedom. Then extract the R squared from the model
+# summary (summary(mod))
+str(mod)
+mod$df.residual
+
+mod_sum <- summary(mod)
+str(mod_sum)
+
+mod_sum$r.squared
+
+### subsetting and assignment #################################################

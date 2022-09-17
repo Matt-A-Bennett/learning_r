@@ -16,4 +16,4 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 
 #### Chapter 4: Subsetting
 - [x] selecting multiple elements
-- [ ] selecting a single element
+- [x] selecting a single element
