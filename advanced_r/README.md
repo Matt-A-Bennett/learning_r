@@ -13,3 +13,7 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] S3 atomic vectors
 - [x] lists
 - [x] data frames and tibbles
+
+#### Chapter 4: Subsetting
+- [x] selecting multiple elements
+- [ ] selecting a single element
