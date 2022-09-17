@@ -63,4 +63,22 @@ str(mod_sum)
 
 mod_sum$r.squared
 
-### subsetting and assignment #################################################
+### applications ##############################################################
+# How would you randomly permute the columns of a data frame? (This is an
+# important technique in random forests.) Can you simultaneously permute the
+# rows and columns in one step?
+df <- outer(1:5, 1:8)
+df[sample(nrow(df)), sample(ncol(df))]
+
+# How would you select a random sample of m rows from a data frame? What if the
+# sample had to be contiguous (i.e., with an initial row, a final row, and
+# every row in between)?
+
+m = 3
+df[sample(nrow(df), m), ]
+
+s <- sample(nrow(df) - m + 1, 1)
+df[s:(s + m - 1), ]
+
+# How could you put the columns in a data frame in alphabetical order?
+head(mtcars[, sort(colnames(mtcars))])
