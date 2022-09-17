@@ -18,3 +18,7 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] selecting multiple elements
 - [x] selecting a single element
 - [x] applications
+
+#### Chapter 5: Control flow
+- [x] choices
+- [x] loops
