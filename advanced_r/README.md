@@ -22,3 +22,6 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 #### Chapter 5: Control flow
 - [x] choices
 - [x] loops
+
+#### Chapter 6: Functions
+- [ ] function fundamentals
