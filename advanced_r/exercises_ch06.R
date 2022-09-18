@@ -1,13 +1,15 @@
 ### choices ###################################################################
 # 1. Given a name, like "mean", match.fun() lets you find a function. Given a
 # function, can you find its name? Why doesn’t that make sense in R?
+# ANS a function's name can be anything e.g. mean2 <- mean (you could even have
+# multiple references to the same function!)
 
 # 2. It’s possible (although typically not useful) to call an anonymous
 # function. Which of the two approaches below is correct? Why?
 
-function(x) 3()
+function(x) 3()     # this one is merely defining two separate functions
 #> function(x) 3()
-(function(x) 3)()
+(function(x) 3)()   # this one is defining and calling one function
 #> [1] 3
 
 # 3. A good rule of thumb is that an anonymous function should fit on one line
@@ -17,21 +19,45 @@ function(x) 3()
 
 # 4. What function allows you to tell if an object is a function? What function
 # allows you to tell if a function is a primitive function?
+?is.function
+?is.primitive
 
 # 5. This code makes a list of all functions in the base package.
 
 objs <- mget(ls("package:base", all = TRUE), inherits = TRUE)
 funs <- Filter(is.function, objs)
+str(funs)
 
 # Use it to answer the following questions:
+library(purrr)
 
     # a. Which base function has the most arguments?
+    n_args <- funs %>%
+        map(formals) %>%
+        map_int(length)
+
+    n_args %>%
+        sort(decreasing = T) %>%
+        head(n=1)
 
     # b. How many base functions have no arguments? What’s special about those
     # functions?
+    prim <- funs %>%
+        map(is.primitive) %>%
+        unlist()
+
+    names(n_args[!prim & n_args == 0]) %>%
+        length()
 
     # c. How could you adapt the code to find all primitive functions?
+    funs %>%
+        keep(is.primitive) %>%
+        names()
 
 # 6. What are the three important components of a function?
+# ANS: formals, body, environment
 
 # 7. When does printing a function not show the environment it was created in?
+# ANS: When it's a primitive function
+
+### lexical scoping ###########################################################

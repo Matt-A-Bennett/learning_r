@@ -24,4 +24,5 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] loops
 
 #### Chapter 6: Functions
-- [ ] function fundamentals
+- [x] function fundamentals
+- [ ] lexical scoping
