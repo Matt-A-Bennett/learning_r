@@ -12,7 +12,6 @@ library(ggdark)
 library(ggbeeswarm)
 library(viridis)
 library(ggrepel)
-source("../functions.R")
 options(width = 158)
 
 theme_set(dark_theme_gray(base_size = 28)
