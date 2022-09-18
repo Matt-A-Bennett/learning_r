@@ -25,4 +25,4 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 
 #### Chapter 6: Functions
 - [x] function fundamentals
-- [ ] lexical scoping
+- [x] lexical scoping

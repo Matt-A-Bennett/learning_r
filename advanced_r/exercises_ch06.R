@@ -61,3 +61,28 @@ library(purrr)
 # ANS: When it's a primitive function
 
 ### lexical scoping ###########################################################
+# 1. What does the following code return? Why? Describe how each of the three
+# c’s is interpreted.
+
+c <- 10 # standard
+c(c = c) # equivalent to c(a = c), but with name as c. First c here is the
+         # function, args come from 'c' = the c <- 10
+
+# 2. What are the four principles that govern how R looks for values?
+# masking, func vs var, fresh start, happens when the func is run
+
+# 3. What does the following function return? Make a prediction before running
+# the code yourself.
+
+f <- function(x) {
+  f <- function(x) {
+    f <- function() {
+      x ^ 2
+    }
+    f() + 1
+  }
+  f(x) * 2
+}
+f(10)
+
+((10^2) + 1) * 2
