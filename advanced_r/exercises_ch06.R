@@ -86,3 +86,76 @@ f <- function(x) {
 f(10)
 
 ((10^2) + 1) * 2
+
+### lazy evaluation ###########################################################
+
+# 1. What important property of && makes x_ok() work? ANS: it's a logical AND
+
+x_ok <- function(x) {
+  !is.null(x) && length(x) == 1 && x > 0
+}
+
+x_ok(NULL)
+#> [1] FALSE
+x_ok(1)
+#> [1] TRUE
+x_ok(1:3)
+#> [1] FALSE
+
+# What is different with this code? Why is this behaviour undesirable here?
+# ANS: this one keeps evaluating even if a condition is FALSE
+
+x_ok <- function(x) {
+  !is.null(x) & length(x) == 1 & x > 0 
+}
+
+x_ok(NULL)
+#> logical(0)
+x_ok(1)
+#> [1] TRUE
+x_ok(1:3)
+#> [1] FALSE FALSE FALSE
+
+# 2. What does this function return? Why? Which principle does it illustrate?
+# ANS: 100 because z <- 100 is evaluated first, then x = z, the x is returned
+
+f2 <- function(x = z) {
+  z <- 100
+  x
+}
+f2()
+
+# 3. What does this function return? Why? Which principle does it illustrate?
+# ANS 2 1 because y <- 1, and x gets the return value of { ; 2}
+# the default y = 0 is not used since y already got set
+
+y <- 10
+f1 <- function(x = {y <- 1; 2}, y = 0) {
+  c(x, y)
+}
+f1()
+y
+
+# 4. In hist(), the default value of xlim is range(breaks), the default value
+# for breaks is "Sturges", and
+
+range("Sturges")
+#> [1] "Sturges" "Sturges"
+
+# Explain how hist() works to get a correct xlim value. ANS: Sturges is a
+# function which figures out break points from a data vector x (other functions
+# can be explicitly used instead of this default one)
+
+# 5. Explain why this function works. Why is it confusing?
+
+show_time <- function(x = stop("Error!")) { # if x not supplied, default waiing
+  stop <- function(...) Sys.time() # redefine stop as the return value of fct
+                                   # (... args passed in aren't used)
+  print(x) # lazy eval x = stop, which is now returne val time
+}
+show_time() # without supplying x, the above takes place
+#> [1] "2021-02-21 19:22:36 UTC"
+
+# 6. How many arguments are required when calling library()? ANS: none
+
+### ... (dot-dot-dot) #########################################################

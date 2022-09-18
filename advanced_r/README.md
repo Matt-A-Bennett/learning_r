@@ -26,3 +26,5 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 #### Chapter 6: Functions
 - [x] function fundamentals
 - [x] lexical scoping
+- [x] lazy evaluation
+- [ ] ... (dot-dot-dot)
