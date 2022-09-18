@@ -27,4 +27,4 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] function fundamentals
 - [x] lexical scoping
 - [x] lazy evaluation
-- [ ] ... (dot-dot-dot)
+- [x] ... (dot-dot-dot)

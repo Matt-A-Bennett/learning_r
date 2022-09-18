@@ -159,3 +159,29 @@ show_time() # without supplying x, the above takes place
 # 6. How many arguments are required when calling library()? ANS: none
 
 ### ... (dot-dot-dot) #########################################################
+# 1. Explain the following results:
+
+sum(1, 2, 3)  # does what it looks like
+#> [1] 6
+mean(1, 2, 3) # mean is computed for first arg, the rest are taken as extra args
+#> [1] 1
+
+sum(1, 2, 3, na.omit = TRUE)  # 'na.omit' is taken as a named value: T = 1
+#> [1] 7
+mean(1, 2, 3, na.omit = TRUE) # mean is computed for first arg, the rest are
+                              # taken as extra args
+#> [1] 1
+
+# 2. Explain how to find the documentation for the named arguments in the
+# following function call:
+
+plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
+#> ?graphics::plot  # to get all but last
+#> ?par             # to get col.lab (refered from above)
+
+# 3. Why does plot(1:10, col = "red") only colour the points, not the axes or
+# labels? Read the source code of plot.default() to find out.
+# ANS: looks like col arg (among others) are explicitly prevented from being
+# passed as part of ... into axes and lable functions by makeing them come
+# *after* the ... has been given to those functions:
+# Axis <- function(..., col, bg, pch, cex, lty, lwd) Axis(...)
