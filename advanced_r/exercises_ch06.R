@@ -188,11 +188,19 @@ plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 
 ### exiting a function ########################################################
 # 1. What does load() return? Why don’t you normally see these values?
+# ANS: returns 'A character vector of the names of objects created, invisibly.'
+# argument <verbose> is FALSE by default
 
 # 2. What does write.table() return? What would be more useful?
+# ANS: returns a call to a C function... return x - the object to be written
+# would be more useful, as then it could be part of a pipe that writes an
+# intermediate stop
 
 # 3. How does the chdir parameter of source() compare to with_dir()? Why might
 # you prefer one to the other?
+# ANS:  for source, R cds to the file location, then evaluates it - could be
+#           nice if that file sources other files using relative paths
+#       for withr::with_dir, you can execute several statements in the dir
 
 # 4. Write a function that opens a graphics device, runs the supplied code, and
 # closes the graphics device (always, regardless of whether or not the plotting
@@ -216,3 +224,11 @@ capture.output2(cat("a", "b", "c", sep = "\n"))
 # Compare capture.output() to capture.output2(). How do the functions differ?
 # What features have I removed to make the key ideas easier to see? How have I
 # rewritten the key ideas so they’re easier to understand?
+
+# ANS: only code to be executed supplied, and output is written to a tempfile,
+# (using sink), before being read back out into a character vector. 
+#
+# on.exit() lines are stored next to the lines which they clean up after, not
+# spread apart throughout the function.
+
+### function forms ############################################################

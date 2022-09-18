@@ -28,4 +28,5 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] lexical scoping
 - [x] lazy evaluation
 - [x] ... (dot-dot-dot)
-- [ ] exiting a function
+- [x] exiting a function
+- [ ] function forms
