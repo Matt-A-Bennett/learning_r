@@ -185,3 +185,34 @@ plot(1:10, col = "red", pch = 20, xlab = "x", col.lab = "blue")
 # passed as part of ... into axes and lable functions by makeing them come
 # *after* the ... has been given to those functions:
 # Axis <- function(..., col, bg, pch, cex, lty, lwd) Axis(...)
+
+### exiting a function ########################################################
+# 1. What does load() return? Why don’t you normally see these values?
+
+# 2. What does write.table() return? What would be more useful?
+
+# 3. How does the chdir parameter of source() compare to with_dir()? Why might
+# you prefer one to the other?
+
+# 4. Write a function that opens a graphics device, runs the supplied code, and
+# closes the graphics device (always, regardless of whether or not the plotting
+# code works).
+
+# 5. We can use on.exit() to implement a simple version of capture.output().
+
+capture.output2 <- function(code) {
+  temp <- tempfile()
+  on.exit(file.remove(temp), add = TRUE, after = TRUE)
+
+  sink(temp)
+  on.exit(sink(), add = TRUE, after = TRUE)
+
+  force(code)
+  readLines(temp)
+}
+capture.output2(cat("a", "b", "c", sep = "\n"))
+#> [1] "a" "b" "c"
+
+# Compare capture.output() to capture.output2(). How do the functions differ?
+# What features have I removed to make the key ideas easier to see? How have I
+# rewritten the key ideas so they’re easier to understand?
