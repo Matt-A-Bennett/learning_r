@@ -232,3 +232,110 @@ capture.output2(cat("a", "b", "c", sep = "\n"))
 # spread apart throughout the function.
 
 ### function forms ############################################################
+# 1. Rewrite the following code snippets into prefix form:
+
+1 + 2 + 3
+`+`(`+`(1, 2), 3)
+
+1 + (2 + 3)
+`+`(1, `+`(2, 3))
+
+x = 1:6
+n = 2
+if (length(x) >= 5) x[[5]] else x[[n]]
+`if`(length(x) >= 5, x[[5]], x[[n]])
+`if`(`>=`(length(x), 5), x[[5]], x[[n]])
+`if`(`>=`(length(x), 5), `[[`(x, 5), [[n]])
+`if`(`>=`(length(x), 5), `[[`(x, 5), `[[`(x, n))
+
+# 2. Clarify the following list of odd function calls:
+
+x <- sample(c(1:10, NA), 20, replace = TRUE)
+y <- runif(20, min = 0, max = 1)
+cor(x, y, method = "kendall", use = "pairwise.complete.obs")
+
+# 3. Explain why the following code fails:
+
+`modify<-` <- function(x, position, value) {
+  x[position] <- value
+  x
+}
+
+x <- 1:3
+modify(get("x"), 2) <- 10
+#> Error: target of assignment expands to non-language object
+get("x") <- `modify<-`(get("x"), 2, 10)
+get("x") <- 10
+
+# 4. Create a replacement function that modifies a random location in a vector.
+`mod_rand<-` <- function(x, value) {
+    ind <- sample(length(x), 1)
+    x[ind] <- value
+    return (x)
+}
+
+x = 1:3
+mod_rand(x) <- 20
+x
+
+# 5. Write your own version of + that pastes its inputs together if they are
+# character vectors but behaves as usual otherwise. In other words, make this
+# code work:
+`+` <- function(a, b) {
+    if (is.character(a) && is.character(a)) {
+    return (paste0(a, b))
+    } else {
+        return (base::`+`(a, b))
+    }
+}
+
+1 + 2
+#> [1] 3
+
+"a" + "b"
+#> [1] "ab"
+
+# 6. Create a list of all the replacement functions found in the base package.
+# Which ones are primitive functions? (Hint: use apropos().)
+
+library(purrr)
+out <- apropos('<-$', where = T, mode = 'function') %>%
+    mget(envir = baseenv(), ifnotfound = NA) %>%
+    keep(is.primitive) %>%
+    names()
+for (i in out) print(i)
+
+# 7. What are valid names for user-created infix functions?
+
+library(purrr)
+out <- apropos('%.*%', where = T, mode = 'function') %>%
+    mget(envir = baseenv(), ifnotfound = NA) %>%
+    names()
+print('already used in base:')
+for (i in out) print(i)
+
+# 8. Create an infix xor() operator.
+`%xor%` <- function(a, b) {
+    return (a != b)
+}
+    
+for (i in c(1, 0)) {
+    for (j in c(1, 0)) {
+        print((i %xor% j) == (xor(i, j)))
+    }
+}
+
+# 9. Create infix versions of the set functions intersect(), union(), and
+# setdiff(). You might call them %n%, %u%, and %/% to match conventions from
+# mathematics.
+`%n%` <- function(x, y) {
+    intersect(x, y)
+}
+
+`%u%` <- function(x, y) {
+    union(x, y)
+}
+
+`%/%` <- function(x, y) {
+    setdiff(x, y)
+}

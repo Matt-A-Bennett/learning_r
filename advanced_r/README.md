@@ -29,4 +29,4 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] lazy evaluation
 - [x] ... (dot-dot-dot)
 - [x] exiting a function
-- [ ] function forms
+- [x] function forms
