@@ -30,3 +30,9 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] ... (dot-dot-dot)
 - [x] exiting a function
 - [x] function forms
+
+#### Chapter 7: Environments
+- [x] environment basics
+- [x] recursing over environment
+- [ ] special environments
+- [ ] call stacks
