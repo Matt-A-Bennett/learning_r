@@ -92,6 +92,31 @@ mean <- 10
 fget("fget", inherits = F)
 
 ### special environments ######################################################
+# 1. How is search_envs() different from env_parents(global_env())?
+# ANS: a) includes global, b) includes only parents of global
+# ANS: b) includes R_EmptyEnv
 
+# 2. Draw a diagram that shows the enclosing environments of this function:
+
+f1 <- function(x1) {
+  f2 <- function(x2) {
+    f3 <- function(x3) {
+      x1 + x2 + x3
+    }
+f3(3)
+}
+  f2(2)
+}
+f1(1)
+
+str(f1)
+
+# 3. Write an enhanced version of str() that provides more information about
+# functions. Show where the function was found and what environment it was
+# defined in.
+
+str2(x) {
+
+}
 
 ### call stacks ###############################################################

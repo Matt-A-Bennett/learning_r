@@ -36,3 +36,9 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] recursing over environment
 - [ ] special environments
 - [ ] call stacks
+
+#### Chapter 8: Conditions
+- [ ] signalling conditions
+- [ ] handling conditions
+- [ ] custom conditions
+- [ ] applications
