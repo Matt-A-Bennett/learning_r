@@ -38,7 +38,7 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [ ] call stacks
 
 #### Chapter 8: Conditions
-- [ ] signalling conditions
-- [ ] handling conditions
+- [x] signalling conditions
+- [x] handling conditions
 - [ ] custom conditions
 - [ ] applications
