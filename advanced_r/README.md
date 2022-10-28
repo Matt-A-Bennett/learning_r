@@ -41,4 +41,4 @@ Going through the exercises in [Advanced R](https://adv-r.hadley.nz/index.html)
 - [x] signalling conditions
 - [x] handling conditions
 - [ ] custom conditions
-- [ ] applications
+- [x] applications
